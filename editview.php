@@ -17,11 +17,11 @@
     if ($action != ''){
         $result = include "{$CFG->dirroot}/mod/flashcard/editview.controller.php";
         if ($result == -1){ // traps forms
-            print_footer($course);
+            echo $OUTPUT->footer($course);
         }
     }
     
-    $cards = get_records('flashcard_deckdata', 'flashcardid', $flashcard->id, 'id');
+    $cards = $DB->get_records('flashcard_deckdata', array('flashcardid'=> $flashcard->id), 'id');
     
     $strquestionnum = get_string('num', 'flashcard');
     $strquestion = get_string('question', 'flashcard');
@@ -108,7 +108,7 @@ if (!empty($cards)){
 <p><a href="Javascript:document.forms['editcard'].what.value = 'delete' ; document.forms['editcard'].submit()"><?php print_string('deleteselection', 'flashcard') ?></a></p>
 <?php
 } else {
-    print_simple_box(get_string('nocards', 'flashcard'));
+    echo $OUTPUT->box(get_string('nocards', 'flashcard'));
 }
 ?>
 </div>

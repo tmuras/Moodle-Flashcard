@@ -10,7 +10,7 @@
     * @license http://www.gnu.org/copyleft/gpl.html GNU Public License
     */
 
-    require_once("../../config.php");
+    require_once("/home/zabuch/www/moodle2/config.php");
     require_once($CFG->dirroot.'/mod/flashcard/lib.php');
 
     $id = required_param('id', PARAM_INT);   // course

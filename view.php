@@ -11,7 +11,7 @@
     * @version Moodle 2.0
     */
 
-    require_once('../../config.php');
+    require_once('/home/zabuch/www/moodle2/config.php');
     require_once($CFG->dirroot.'/mod/flashcard/lib.php');
     require_once($CFG->dirroot.'/mod/flashcard/locallib.php');
 
@@ -22,6 +22,9 @@
     $action = optional_param('what', '', PARAM_ACTION);     // command
     
     $thisurl = $CFG->wwwroot.'/mod/flashcard/view.php';
+    
+    $url = new moodle_url('/mod/flashcard/view.php');
+    $PAGE->set_url($url);
 
     if ($id) {
         if (! $cm = $DB->get_record('course_modules', array('id' => $id))) {
@@ -34,7 +37,7 @@
             print_error('errorinvalidflashcardid', 'flashcard');
         }
     } else {
-        if (! $flashcard = $DB->get_record('flashcard', 'id', $a)) {
+        if (! $flashcard = $DB->get_record('flashcard', array('id' => $a))) {
             print_error('invalidcoursemodule');
         }
         if (! $course = $DB->get_record('course', array('id' => $flashcard->course))) {
@@ -150,9 +153,9 @@
 /// print summary
 
     if (!empty($flashcard->summary)) {
-        print_box_start();
+        echo $OUTPUT->box_start();
         echo format_text($flashcard->summary, $flashcard->summaryformat, NULL, $course->id);
-        print_box_end();
+        echo $OUTPUT->box_end();
     }
 
 /// print active view
@@ -186,5 +189,5 @@
 
 /// Finish the page
 
-    print_footer($course);
+    echo $OUTPUT->footer($course);
 ?>

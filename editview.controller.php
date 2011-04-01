@@ -18,9 +18,9 @@
 if ($action == 'add'){
     $add = required_param('add', PARAM_INT);
     $card->flashcardid = $flashcard->id;
-    $users = get_records_menu('flashcard_card', 'flashcardid', $flashcard->id, '', 'DISTINCT userid, id');
+    $users = $DB->get_records_menu('flashcard_card', array('flashcardid'=> $flashcard->id), '', 'DISTINCT userid, id');
     for($i = 0 ; $i < $add ; $i++){
-        if (!$newcardid = insert_record('flashcard_deckdata', $card)){
+        if (!$newcardid = $DB->insert_record('flashcard_deckdata', $card)){
             error ("Could not add card to deck");
         }
         if ($users){
@@ -31,7 +31,7 @@ if ($action == 'add'){
                 $deckcard->lastaccessed = 0;
                 $deckcard->deck = 1;
                 $deckcard->accesscount = 0;
-                if (!insert_record('flashcard_card', $deckcard)){
+                if (!$DB->insert_record('flashcard_card', $deckcard)){
                     error ("Could not bind card to user $userid deck");
                 }
             }
@@ -44,11 +44,11 @@ if ($action == 'delete'){
     if (is_array($items)) $items = implode(',', $items);
     $items = str_replace(",", "','", $items);
 
-    if (!delete_records_select('flashcard_deckdata', " id IN ('$items') ")){
+    if (!$DB->delete_records_select('flashcard_deckdata', " id IN ('$items') ")){
         error ("Could not add card to deck");
     }
 
-    if (!delete_records_select('flashcard_card', " entryid IN ('$items') ")){
+    if (!$DB->delete_records_select('flashcard_card', " entryid IN ('$items') ")){
         error ("Could not add card to deck");
     }
 }
@@ -74,7 +74,7 @@ if ($action == 'save'){
             // combine image and sound in one single field
             $card->answertext = required_param("i{$card->id}", PARAM_TEXT).'@'.required_param("s{$card->id}", PARAM_TEXT);
         }
-        if (!update_record('flashcard_deckdata', $card)){
+        if (!$DB->update_record('flashcard_deckdata', $card)){
             error("Could not update deck card");
         }
     }
@@ -83,7 +83,7 @@ if ($action == 'save'){
 if ($action == 'import'){
     include 'import_form.php';
     $mform = new flashcard_import_form($flashcard->id);
-    print_heading(get_string('importingcards', 'flashcard').helpbutton('import', get_string('import', 'flashcard'), 'flashcard', true, false, '', true));
+    echo $OUTPUT->heading(get_string('importingcards', 'flashcard').helpbutton('import', get_string('import', 'flashcard'), 'flashcard', true, false, '', true));
     $mform->display();
     return -1;
 }
@@ -141,19 +141,19 @@ if ($action == 'doimport'){
                 if ($report->badcards == 0){
                     /// everything ok
                     /// reset all data
-                    delete_records('flashcard_card', 'flashcardid', $flashcard->id);
-                    delete_records('flashcard_deckdata', 'flashcardid', $flashcard->id);
+                    $DB->delete_records('flashcard_card', array('flashcardid' => $flashcard->id));
+                    $DB->delete_records('flashcard_deckdata', array('flashcardid' => $flashcard->id));
         
                     // insert new cards
                     foreach($inputs as $input){
                         $deckcard->flashcardid = $flashcard->id;
                         $deckcard->questiontext = $input->question;
                         $deckcard->answertext = $input->answer;
-                        insert_record('flashcard_deckdata', $deckcard);
+                        $DB->insert_record('flashcard_deckdata', $deckcard);
                     }
                     
                     // reset questionid in flashcard instance
-                    set_field('flashcard', 'questionid', 0, 'id', $flashcard->id);
+                    $DB->set_field('flashcard', 'questionid', 0, array('id' => $flashcard->id));
                     
                 }
 

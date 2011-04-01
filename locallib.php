@@ -204,7 +204,7 @@ function flashcard_print_deck_status(&$flashcard, $userid, &$status, $return){
     $options['view']    = 'summary';
     $options['what']    = 'reset';
     $options['userid']  = $userid;
-    $str .= print_single_button("view.php", $options, get_string('reset'), 'get', '_self', true);
+    $str .= $OUTPUT->single_button(new moodle_url("view.php", $options), get_string('reset'), 'get');
 
     if ($return)
         return $str;    

@@ -111,7 +111,7 @@ function togglecard(){
 
 <p>
 <?php 
-print_heading($flashcard->name); 
+echo $OUTPUT->heading($flashcard->name); 
 print_string('instructions', 'flashcard'); 
 ?>
 </p>
@@ -182,7 +182,8 @@ print_string('instructions', 'flashcard');
             $options['view'] = 'play';
             $options['deck'] = $deck;
             $options['cardid'] = $subquestions[$random]->cardid;
-            print_single_button('view.php', $options, get_string('igotit', 'flashcard')); 
+            echo $OUTPUT->single_button(new moodle_url('view.php',$options), get_string('igotit', 'flashcard'), 'post');
+//            var_dump($options); die();
             ?>
         </td>
     </tr>
@@ -194,7 +195,7 @@ print_string('instructions', 'flashcard');
             $options['view'] = 'play';
             $options['deck'] = $deck;
             $options['cardid'] = $subquestions[$random]->cardid;
-            print_single_button('view.php', $options, get_string('ifailed', 'flashcard')); 
+            echo $OUTPUT->single_button(new moodle_url('view.php', $options), get_string('ifailed', 'flashcard'), 'post'); 
             ?>
         </td>
     </tr>
@@ -205,7 +206,7 @@ print_string('instructions', 'flashcard');
             $options['what'] = 'reset';
             $options['view'] = 'play';
             $options['deck'] = $deck;
-            print_single_button('view.php', $options, get_string('reset', 'flashcard')); 
+            echo $OUTPUT->single_button(new moodle_url('view.php', $options), get_string('reset', 'flashcard'), 'post');
             ?>
         </td>
     </tr>

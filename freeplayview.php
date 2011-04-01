@@ -14,7 +14,7 @@
         error("Illegal direct access to this screen");
     }
 
-    $subquestions = get_records('flashcard_deckdata', 'flashcardid', $flashcard->id);
+    $subquestions = $DB->get_records('flashcard_deckdata', array('flashcardid' => $flashcard->id));
     if (empty($subquestions)) {
         notice(get_string('nosubquestions', 'flashcard'));
         return;          
