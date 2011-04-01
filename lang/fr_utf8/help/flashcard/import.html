@@ -1,0 +1,14 @@
+<h2><img alt="<?php print_string('modulename', 'flashcard');?>" valign="middle" src="<?php echo $CFG->wwwroot?>/mod/flashcard/icon.gif">
+&nbsp;<?php print_string('modulename', 'flashcard');?></h2>
+<h3>Importer des questions en masse</h3>
+
+<p>Vous pouvez désormais rapidement charger un flashcard avec un grand nombre de questions/réponses par la fonctionnalité d'import en masse.</p>
+
+<p>Il vous faut juste constituer un fichier texte contenant la liste formatée de vos paries de questions/réponses et coller ce texte dans la zone de texte d'import. Vous pouvez décider de la forme de ce fichier, sur la base de séparaeurs les plus courants, sous Linux ou sous Windows. L'un des formats les plus classiques est le format "une paire par ligne", utilisant un deux-points (':') ou une virgule comme séparateur entre les questions et les réponses.</p>
+
+<p>Les questions doivent toujours être placées en premier, et DOIVENT avoir une réponse exprimée. Les lignes blanches ou vides sont ignorées, ainsi que celles qui commencent par un # ou un /.</p>
+
+<p>The importer will make a fast check of the text you want to import. It will reject
+the import if the text sequence is not well formed and tell you how many pairs are wrong in the file.</p>
+
+<p>As successfuly importing will erase all data from the decks but also belonging to participants, a confirmation checkbox needs to be checked in to force the import to be performed.</p>  

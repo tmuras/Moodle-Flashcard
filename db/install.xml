@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="mod/flashcard/db" VERSION="20080510" COMMENT="XMLDB file for Moodle mod/flashcard"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
+>
+  <TABLES>
+    <TABLE NAME="flashcard" COMMENT="flashcard table retrofitted from MySQL" NEXT="flashcard_card">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false" NEXT="course"/>
+        <FIELD NAME="course" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="id" NEXT="name"/>
+        <FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" ENUM="false" PREVIOUS="course" NEXT="summary"/>
+        <FIELD NAME="summary" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" ENUM="false" PREVIOUS="name" NEXT="summaryformat"/>
+        <FIELD NAME="summaryformat" TYPE="int" LENGTH="2" NOTNULL="true" UNSIGNED="false" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="summary" NEXT="timemodified"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="summaryformat" NEXT="starttime"/>
+        <FIELD NAME="starttime" TYPE="int" LENGTH="11" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" ENUM="false" COMMENT="availability starts" PREVIOUS="timemodified" NEXT="endtime"/>
+        <FIELD NAME="endtime" TYPE="int" LENGTH="11" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" ENUM="false" COMMENT="availability ends" PREVIOUS="starttime" NEXT="questionid"/>
+        <FIELD NAME="questionid" TYPE="int" LENGTH="11" NOTNULL="true" UNSIGNED="false" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="endtime" NEXT="autodowngrade"/>
+        <FIELD NAME="autodowngrade" TYPE="int" LENGTH="1" NOTNULL="true" UNSIGNED="true" DEFAULT="1" SEQUENCE="false" ENUM="false" COMMENT="if true downgrades automatically cards for lazy users on cron" PREVIOUS="questionid" NEXT="decks"/>
+        <FIELD NAME="decks" TYPE="int" LENGTH="3" NOTNULL="true" UNSIGNED="true" DEFAULT="3" SEQUENCE="false" ENUM="false" COMMENT="number of decks" PREVIOUS="autodowngrade" NEXT="deck2_release"/>
+        <FIELD NAME="deck2_release" TYPE="int" LENGTH="11" NOTNULL="true" UNSIGNED="true" DEFAULT="96" SEQUENCE="false" ENUM="false" COMMENT="time for unseen cards downgrade to deck1" PREVIOUS="decks" NEXT="deck3_release"/>
+        <FIELD NAME="deck3_release" TYPE="int" LENGTH="11" NOTNULL="true" UNSIGNED="true" DEFAULT="96" SEQUENCE="false" ENUM="false" COMMENT="time for getting the card be downgraded" PREVIOUS="deck2_release" NEXT="deck4_release"/>
+        <FIELD NAME="deck4_release" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="96" SEQUENCE="false" ENUM="false" COMMENT="Default comment for the field, please edit me" PREVIOUS="deck3_release" NEXT="deck1_delay"/>
+        <FIELD NAME="deck1_delay" TYPE="int" LENGTH="11" NOTNULL="true" UNSIGNED="true" DEFAULT="48" SEQUENCE="false" ENUM="false" COMMENT="triggers the need of checking cards" PREVIOUS="deck4_release" NEXT="deck2_delay"/>
+        <FIELD NAME="deck2_delay" TYPE="int" LENGTH="11" NOTNULL="true" UNSIGNED="true" DEFAULT="96" SEQUENCE="false" ENUM="false" COMMENT="Triggers the need of checking cards" PREVIOUS="deck1_delay" NEXT="deck3_delay"/>
+        <FIELD NAME="deck3_delay" TYPE="int" LENGTH="11" NOTNULL="true" UNSIGNED="true" DEFAULT="168" SEQUENCE="false" ENUM="false" COMMENT="Default comment for the field, please edit me" PREVIOUS="deck2_delay" NEXT="deck4_delay"/>
+        <FIELD NAME="deck4_delay" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="376" SEQUENCE="false" ENUM="false" COMMENT="Default comment for the field, please edit me" PREVIOUS="deck3_delay" NEXT="questionsmediatype"/>
+        <FIELD NAME="questionsmediatype" TYPE="int" LENGTH="1" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" COMMENT="Default comment for the field, please edit me" PREVIOUS="deck4_delay" NEXT="answersmediatype"/>
+        <FIELD NAME="answersmediatype" TYPE="int" LENGTH="1" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" COMMENT="Default comment for the field, please edit me" PREVIOUS="questionsmediatype" NEXT="flipdeck"/>
+        <FIELD NAME="flipdeck" TYPE="int" LENGTH="1" NOTNULL="false" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" COMMENT="Default comment for the field, please edit me" PREVIOUS="answersmediatype"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" COMMENT="Primary key for flashcard"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="flashcard_card" COMMENT="A table to distribute cards into decks" PREVIOUS="flashcard" NEXT="flashcard_deckdata">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false" COMMENT="id of the table, please edit me" NEXT="flashcardid"/>
+        <FIELD NAME="flashcardid" TYPE="int" LENGTH="11" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" COMMENT="the flashcard instance" PREVIOUS="id" NEXT="userid"/>
+        <FIELD NAME="userid" TYPE="int" LENGTH="11" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" ENUM="false" COMMENT="the owner" PREVIOUS="flashcardid" NEXT="entryid"/>
+        <FIELD NAME="entryid" TYPE="int" LENGTH="11" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" COMMENT="the question" PREVIOUS="userid" NEXT="deck"/>
+        <FIELD NAME="deck" TYPE="int" LENGTH="11" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" COMMENT="one of the decks in the flashcard" PREVIOUS="entryid" NEXT="lastaccessed"/>
+        <FIELD NAME="lastaccessed" TYPE="int" LENGTH="11" NOTNULL="false" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" COMMENT="last time the card was queried" PREVIOUS="deck" NEXT="accesscount"/>
+        <FIELD NAME="accesscount" TYPE="int" LENGTH="11" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" COMMENT="Default comment for the field, please edit me" PREVIOUS="lastaccessed"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" COMMENT="primary key of the table"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="flashcard_deckdata" COMMENT="holds questions/responses" PREVIOUS="flashcard_card">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false" COMMENT="id of the table, please edit me" NEXT="flashcardid"/>
+        <FIELD NAME="flashcardid" TYPE="int" LENGTH="11" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" COMMENT="Default comment for the field, please edit me" PREVIOUS="id" NEXT="questiontext"/>
+        <FIELD NAME="questiontext" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="Default comment for the field, please edit me" PREVIOUS="flashcardid" NEXT="answertext"/>
+        <FIELD NAME="answertext" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="Default comment for the field, please edit me" PREVIOUS="questiontext"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" COMMENT="primary key of the table, please edit me"/>
+      </KEYS>
+    </TABLE>
+  </TABLES>
+</XMLDB>

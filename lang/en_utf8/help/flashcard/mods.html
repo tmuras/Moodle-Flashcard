@@ -1,0 +1,28 @@
+<img alt="<?php print_string('modulename', 'flashcard');?>" valign="middle" src="<?php echo $CFG->wwwroot?>/mod/flashcard/icon.gif">
+&nbsp;<b><?php print_string('modulename', 'flashcard');?></b></b>
+
+<ul>
+<p>
+This module provide students a way of fast memoizing list of "things". This is a typical
+indexing exercise, where a map of coupled things should be learned and retained. We say "thing"
+because either key or value could be any related pair of text, images or sounds.
+</p>
+<p>
+This module implements a full Leitner system to mechanically support the memoization process
+of the relationships. The couples to be learned are first attached to a deck of cards. These are 
+initially considered as difficult to learn. The teacher can choose a learning curve using 2, 3 or 4 decks.
+4 decks should be used for large set of definitions. When the student fails answering a card, he will
+tell it and let the card stay in the same deck. If he has the correct answer, he will ask for passing the
+card to the second deck, so considered as less difficult to learn. The process is repeated for all decks
+till the last one where card will remain. The decks are triggered so the student knows which he should 
+review. Difficult cards will trigger more often thant trivial cards. Trigger delays are adjustable.
+</p>
+<p>
+When a student do not apply for reviewing decks, cards may downgrade automatically to an higher difficulty
+deck.
+</p>
+<p>
+The module allows also a free use of the cards, enabled by module configuration. The module is 
+customisable graphically using a teacher defined CSS and image set.
+</p>
+</ul>

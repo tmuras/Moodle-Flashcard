@@ -1,0 +1,18 @@
+<h2><img alt="<?php print_string('modulename', 'flashcard');?>" valign="middle" src="<?php echo $CFG->wwwroot?>/mod/flashcard/icon.gif">
+&nbsp;<?php print_string('modulename', 'flashcard');?></h2>
+<h3>Importing quetion from raw text</h3>
+
+<p>You may massively import question/Answer pairs within a flashcard using the 
+card bulk import feature.</p>
+
+<p>You just need to make a file with a list of questions/answers pairs and paste the content of that file in the importer's textarea. 
+You may decide to encode this file with some kinds of common separators, on Linux or
+Windows systems. The most common may be "one pair by line" files, using ':' or comma to
+separate questions from answers.</p>
+
+<p>Questions will only comme first, and MUST always have an answer. Empty lines or black lines will be ignored, also those starting with a # or a slash (/).</p>
+
+<p>The importer will make a fast check of the text you want to import. It will reject
+the import if the text sequence is not well formed and tell you how many pairs are wrong in the file.</p>
+
+<p>As successfuly importing will erase all data from the decks but also belonging to participants, a confirmation checkbox needs to be checked in to force the import to be performed.</p>  
