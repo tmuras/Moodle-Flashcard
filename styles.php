@@ -31,6 +31,11 @@
 
 .bar{
     background-image: url('pix/men.png');
-     background-repeat: repeat-x;
+    background-repeat: repeat-x;
     border: solid 1px #0B2386;
+}
+
+.flashcard_playbutton{
+    display: inline-block;
+    padding: 10px;
 }

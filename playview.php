@@ -11,7 +11,9 @@
     * @version Moodle 2.0
     */
 
-    // Security
+/* @var $OUTPUT core_renderer */
+
+  // Security
     if (!defined('MOODLE_INTERNAL')){
         die('Direct access to this script is forbidden.'); /// It must be included from a Moodle page.
     }
@@ -69,6 +71,7 @@
         $flashcard->questionsmediatype = $tmp;
     }
 ?>
+
 <script type="text/javascript">
 
 var qtype = "<?php echo $flashcard->questionsmediatype ?>";
@@ -109,27 +112,19 @@ function togglecard(){
 }
 </script>
 
-<p>
-<?php 
-echo $OUTPUT->heading($flashcard->name); 
-print_string('instructions', 'flashcard'); 
-?>
-</p>
-<table class="flashcard_board" width="100%">
-    <tr>
-        <td rowspan="5">
-        <center>
+        <div id="flashcard_board" style="text-align: center;">
+          <div id="flashcard_header">
+          <?php echo $OUTPUT->heading($flashcard->name);  ?>
+            <p> <?php print_string('instructions', 'flashcard'); ?></p>
 
-            <div id="questiondiv" style="display: block" class="backside" onclick="javascript:togglecard()">
-            <table class="flashcard_question" width="100%" height="100%">
-                <tr>
-                    <td align="center" valign="center">
+          </div>
+            <div id="questiondiv" style="border-style: dashed; width: 300px; margin: 10px auto 10px auto; padding: 10px 30px; display: block; " onclick="javascript:togglecard()" >
                         <?php
                         if ($flashcard->questionsmediatype == FLASHCARD_MEDIA_IMAGE) {
                             flashcard_print_image($flashcard, $subquestion->questiontext);
-                        } elseif ($flashcard->questionsmediatype == FLASHCARD_MEDIA_SOUND){                            
+                        } elseif ($flashcard->questionsmediatype == FLASHCARD_MEDIA_SOUND){
                             flashcard_play_sound($flashcard, $subquestion->questiontext, 'false', false, 'bell_q');
-                        } elseif ($flashcard->questionsmediatype == FLASHCARD_MEDIA_IMAGE_AND_SOUND){                            
+                        } elseif ($flashcard->questionsmediatype == FLASHCARD_MEDIA_IMAGE_AND_SOUND){
                             list($image, $sound) = split('@', $subquestion->questiontext);
                             flashcard_print_image($flashcard, $image);
                             echo "<br/>";
@@ -138,21 +133,14 @@ print_string('instructions', 'flashcard');
                             echo format_string($subquestion->questiontext);
                         }
                         ?>
-                    </td>
-                </tr>
-            </table>
             </div>
-
-            <div id="answerdiv" style="display: none" class="frontside" onclick="javascript:togglecard()">
-    		<table class="flashcard_answer" width="100%" height="100%">
-    		    <tr>
-    		        <td align="center" valign="center">
-    		            <?php 
+            <div id="answerdiv" onclick="javascript:togglecard()" style="border-style: dashed; width: 300px; margin: 10px auto 10px auto; padding: 10px 30px; display: none;">
+    		            <?php
                         if ($flashcard->answersmediatype == FLASHCARD_MEDIA_IMAGE) {
                             flashcard_print_image($flashcard, $subquestion->answertext);
-                        } elseif ($flashcard->answersmediatype == FLASHCARD_MEDIA_SOUND){                            
+                        } elseif ($flashcard->answersmediatype == FLASHCARD_MEDIA_SOUND){
                             flashcard_play_sound($flashcard, $subquestion->answertext, 'false', false, 'bell_a');
-                        } elseif ($flashcard->answersmediatype == FLASHCARD_MEDIA_IMAGE_AND_SOUND){                            
+                        } elseif ($flashcard->answersmediatype == FLASHCARD_MEDIA_IMAGE_AND_SOUND){
                             list($image, $sound) = split('@', $subquestion->answertext);
                             flashcard_print_image($flashcard, $image);
                             echo "<br/>";
@@ -161,59 +149,36 @@ print_string('instructions', 'flashcard');
                             echo format_string($subquestion->answertext);
                         }
                         ?>
-    		        </td>
-    		    </tr>
-    		</table>
-    		</div>
+            </div>
+            <div id="flashcard_controls">
+              <p><?php print_string('cardsremaining', 'flashcard'); ?>: <span id="remain"><?php echo count($subquestions);?></span></p>
 
-    		</center>    
-        </td>
-    </tr>
-    <tr>
-        <td width="200px">
-            <p><?php print_string('cardsremaining', 'flashcard'); ?>: <span id="remain"><?php echo count($subquestions);?></span></p>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <?php 
+            <?php
             $options['id'] = $cm->id;
             $options['what'] = 'igotit';
             $options['view'] = 'play';
             $options['deck'] = $deck;
             $options['cardid'] = $subquestions[$random]->cardid;
-            echo $OUTPUT->single_button(new moodle_url('view.php',$options), get_string('igotit', 'flashcard'), 'post');
-//            var_dump($options); die();
+            echo $OUTPUT->single_button(new moodle_url('view.php',$options), get_string('igotit', 'flashcard'), 'post', array('class'=>'flashcard_playbutton'));
             ?>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <?php 
+
+            <?php
             $options['id'] = $cm->id;
             $options['what'] = 'ifailed';
             $options['view'] = 'play';
             $options['deck'] = $deck;
             $options['cardid'] = $subquestions[$random]->cardid;
-            echo $OUTPUT->single_button(new moodle_url('view.php', $options), get_string('ifailed', 'flashcard'), 'post'); 
+            echo $OUTPUT->single_button(new moodle_url('view.php', $options), get_string('ifailed', 'flashcard'), 'post', array('class'=>'flashcard_playbutton'));
             ?>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <?php 
+<br />
+            <?php
             $options['id'] = $cm->id;
             $options['what'] = 'reset';
             $options['view'] = 'play';
             $options['deck'] = $deck;
             echo $OUTPUT->single_button(new moodle_url('view.php', $options), get_string('reset', 'flashcard'), 'post');
             ?>
-        </td>
-    </tr>
-    <tr>
-        <td align="center" colspan="2">
             <br/><a href="<?php echo $thisurl ?>?id=<?php echo $cm->id ?>&amp;view=checkdecks"><?php print_string('backtodecks', 'flashcard') ?></a>
             - <a href="<?php echo $CFG->wwwroot ?>/course/view.php?id=<?php echo $course->id ?>"><?php print_string('backtocourse', 'flashcard') ?></a>
-        </td>
-      </tr>
-</table>
+            </div>
+        </div>
