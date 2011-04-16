@@ -1,12 +1,15 @@
-<?PHP // $Id: version.php,v 1.4 2009/05/28 12:28:36 diml Exp $
+<?php
 
-/////////////////////////////////////////////////////////////////////////////////
-///  Code fragment to define the version of NEWMODULE
-///  This fragment is called by moodle_needs_upgrading() and /admin/index.php
-/////////////////////////////////////////////////////////////////////////////////
+/**
+ * Code fragment to define the module version etc.
+ * This fragment is called by /admin/index.php
+ *
+ * @package mod-flashcard
+ * @copyright Valery Fremaux
+ * @copyright 2011 onwards Tomasz Muras
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 
-$module->version  = 2008051100;  // The current module version (Date: YYYYMMDDXX)
+$module->version  = 2011041601;  // The current module version (Date: YYYYMMDDXX)
 $module->requires = 2011000000;  // Requires this Moodle version
-$module->cron     = HOURSECS * 2; // Period for cron to check this module (secs)
-
-?>
+$module->cron     = 3600; // Period for cron to check this module (secs)

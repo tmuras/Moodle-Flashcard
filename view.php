@@ -11,7 +11,7 @@
     * @version Moodle 2.0
     */
 
-    require_once('/home/zabuch/www/moodle2/config.php');
+    require_once('../../config.php');
     require_once($CFG->dirroot.'/mod/flashcard/lib.php');
     require_once($CFG->dirroot.'/mod/flashcard/locallib.php');
 

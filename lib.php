@@ -166,7 +166,7 @@ function flashcard_print_recent_activity($course, $isteacher, $timestart) {
 *
 */
 function flashcard_cron () {
-    global $CFG;
+    global $CFG, $DB;
     
     // get all flashcards
     $flashcards = $DB->get_records('flashcard');

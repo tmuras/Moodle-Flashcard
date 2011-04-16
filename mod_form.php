@@ -26,19 +26,24 @@ class mod_flashcard_mod_form extends moodleform_mod {
 	function definition() {
 		global $CFG, $COURSE, $DB;
 
-		$mform    =& $this->_form;
+        $mform    =& $this->_form;
 
-//-------------------------------------------------------------------------------
+
         $mform->addElement('header', 'general', get_string('general', 'form'));
 
         $mform->addElement('text', 'name', get_string('name'), array('size'=>'64'));
-		$mform->setType('name', PARAM_TEXT);
-		$mform->addRule('name', null, 'required', null, 'client');
+      	$mform->setType('name', PARAM_TEXT);
+      	$mform->addRule('name', null, 'required', null, 'client');
 
-		$mform->addElement('htmleditor', 'summary', get_string('summary', 'flashcard'));
-		$mform->setType('summary', PARAM_RAW);
-        $mform->setHelpButton('summary', array('writing', 'questions', 'richtext2'), false, 'editorhelpbutton');
-		// $mform->addRule('summary', get_string('required'), 'required', null, 'client');
+      /// Introduction.
+        $this->add_intro_editor(false, get_string('summary', 'flashcard'));
+
+        //$mform->addHelpButton($elementname, $identifier, $component, $linktext, $suppresscheck)
+        //$mform->setHelpButton($elementname, $buttonargs, $suppresscheck, $function)
+
+        //$mform->addHelpButton('summary', 'import', 'flashcard');
+        //$mform->setHelpButton('summary', array('writing', 'questions', 'richtext2'), false, 'editorhelpbutton');
+
 
         $startdatearray[] = &$mform->createElement('date_time_selector', 'starttime', '');
         $startdatearray[] = &$mform->createElement('checkbox', 'starttimeenable', '');
@@ -56,22 +61,23 @@ class mod_flashcard_mod_form extends moodleform_mod {
             // prepared for 1.9 questionbanck compatibility
             if (function_exists('question_has_capability_on')){
 
-                function drop_questions($a){                    
+                function drop_questions($a){
                     return question_has_capability_on($a->id, 'use');
-                } 
+                }
 
                 $questions = array_filter($questions, 'drop_questions');
-            } 
+            }
         }
         $qoptions = array();
         foreach($questions as $question){
             $qoptions[$question->id] = $question->name;
         }
         $mform->addElement('select', 'questionid', get_string('questionid', 'flashcard'), $qoptions);
-        $mform->setHelpButton('questionid', array('sourcequestion', get_string('questionid', 'flashcard'), 'flashcard'));
+
+        $mform->addHelpButton('questionid', 'sourcequestion', 'flashcard');
 
         $mform->addElement('checkbox', 'forcereload', get_string('forcereload', 'flashcard'));
-        $mform->setHelpButton('forcereload', array('forcereload', get_string('forcereload', 'flashcard'), 'flashcard'));
+        $mform->addHelpButton('forcereload', 'forcereload', 'flashcard');
 
         $stylingtext = get_string('customisation', 'flashcard', $CFG->wwwroot."/files/index.php?id={$COURSE->id}&amp;wdir=%2Fmoddata%2Fflashcard");
         $stylingtext .= "<br/><br/><center><a href=\"$CFG->wwwroot/mod/flashcard/styles.php\" target=\"_blank\">".get_string('stylesheet', 'flashcard')."</a></center>";
@@ -82,27 +88,27 @@ class mod_flashcard_mod_form extends moodleform_mod {
         $mediaoptions[FLASHCARD_MEDIA_SOUND] = get_string('sound', 'flashcard');
         $mediaoptions[FLASHCARD_MEDIA_IMAGE_AND_SOUND] = get_string('imageplussound', 'flashcard');
         $mform->addElement('select', 'questionsmediatype', get_string('questionsmediatype', 'flashcard'), $mediaoptions);
-        $mform->setHelpButton('questionsmediatype', array('mediatypes', get_string('questionsmediatype', 'flashcard'), 'flashcard'));
-
+        $mform->addHelpButton('questionsmediatype', 'mediatypes', 'flashcard');
+        
         $mform->addElement('select', 'answersmediatype', get_string('answersmediatype', 'flashcard'), $mediaoptions);
-        $mform->setHelpButton('answersmediatype', array('mediatypes', get_string('answersmediatype', 'flashcard'), 'flashcard'));
+        $mform->addHelpButton('answersmediatype', 'mediatypes', 'flashcard');
 
         $mform->addElement('selectyesno', 'flipdeck', get_string('flipdeck', 'flashcard'));
-        $mform->setHelpButton('flipdeck', array('flipdeck', get_string('flipdeck', 'flashcard'), 'flashcard'));
+        $mform->addHelpButton('flipdeck', 'flipdeck', 'flashcard');
 
         $options['2'] = 2;
         $options['3'] = 3;
         $options['4'] = 4;
         $mform->addElement('select', 'decks', get_string('decks', 'flashcard'), $options);
         $mform->setType('decks', PARAM_INT); 
-        $mform->setDefault('decks', 2); 
-        $mform->setHelpButton('decks', array('decks', get_string('decks', 'flashcard'), 'flashcard'));
+        $mform->setDefault('decks', 2);
+        $mform->addHelpButton('decks', 'decks', 'flashcard');
 
         $mform->addElement('selectyesno', 'autodowngrade', get_string('autodowngrade', 'flashcard'));
-        $mform->setHelpButton('autodowngrade', array('autodowngrade', get_string('autodowngrade', 'flashcard'), 'flashcard'));
+        $mform->addHelpButton('autodowngrade', 'autodowngrade', 'flashcard');
 
         $mform->addElement('text', 'deck2_release', get_string('deck2_release', 'flashcard'), array('size'=>'5'));
-        $mform->setHelpButton('deck2_release', array('deck_release', get_string('deck2_release', 'flashcard'), 'flashcard'));
+        $mform->addHelpButton('deck2_release', 'deck_release', 'flashcard');
         $mform->setType('deck2_release', PARAM_INT);
         $mform->setDefault('deck2_release', 96);
         $mform->addRule('deck2_release', get_string('numericrequired', 'flashcard'), 'numeric', null, 'client');
@@ -120,7 +126,7 @@ class mod_flashcard_mod_form extends moodleform_mod {
         $mform->disabledIf('deck4_release', 'decks', 'neq', 4);
 
         $mform->addElement('text', 'deck1_delay', get_string('deck1_delay', 'flashcard'), array('size'=>'5'));
-        $mform->setHelpButton('deck1_delay', array('deck_delay', get_string('deck1_delay', 'flashcard'), 'flashcard'));
+        $mform->addHelpButton('deck1_delay', 'deck_delay', 'flashcard');
         $mform->setType('deck1_delay', PARAM_INT);
         $mform->setDefault('deck1_delay', 48);
         $mform->addRule('deck1_delay', get_string('numericrequired', 'flashcard'), 'numeric', null, 'client');
@@ -184,4 +190,3 @@ class mod_flashcard_mod_form extends moodleform_mod {
 	}
 
 }
-?>

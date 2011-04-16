@@ -31,7 +31,7 @@
 // For the core capabilities, the variable is $moodle_capabilities.
 
 
-$mod_flashcard_capabilities = array(
+$capabilities = array(
 
     'mod/flashcard:manage' => array(
         'captype' => 'write',
@@ -58,6 +58,3 @@ $mod_flashcard_capabilities = array(
     )
 
 );
-
-
-?>

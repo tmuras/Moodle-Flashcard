@@ -4,8 +4,10 @@ function xmldb_flashcard_upgrade($oldversion = 0) {
 /// This function does anything necessary to upgrade 
 /// older versions to match current functionality 
 
+    /* @var $DB mysqli_native_moodle_database */
     global $CFG, $DB;
-
+    
+    /* @var $dbman database_manager */
     $dbman = $DB->get_manager();
     $result = true;
 
@@ -174,7 +176,22 @@ function xmldb_flashcard_upgrade($oldversion = 0) {
         $result = $result && $dbman->add_field($table, $field);
     }
 
-    return $result;
+    if ($result && $oldversion < 2011041600) {
+    /// Rename summary into intro and	summaryformat into introformat
+       $table = new xmldb_table('flashcard');
+
+       $field = new xmldb_field('summary');
+       $field->set_attributes(XMLDB_TYPE_TEXT, 'small', null, null, null, null, 'name');
+       $dbman->rename_field($table, $field, 'intro');
+
+       $field = new xmldb_field('summaryformat');
+       $field->set_attributes( XMLDB_TYPE_INTEGER, '4', XMLDB_UNSIGNED, XMLDB_NOTNULL, null, '0', 'intro');
+       $result = $result && $dbman->rename_field($table, $field, 'introformat');
+       $DB->execute("UPDATE {flashcard} SET introformat=1");
+    }
+    
+
+    return true;
 }
 
 ?>
