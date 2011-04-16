@@ -188,6 +188,11 @@ function xmldb_flashcard_upgrade($oldversion = 0) {
        $field->set_attributes( XMLDB_TYPE_INTEGER, '4', XMLDB_UNSIGNED, XMLDB_NOTNULL, null, '0', 'intro');
        $result = $result && $dbman->rename_field($table, $field, 'introformat');
        $DB->execute("UPDATE {flashcard} SET introformat=1");
+
+    /// Workaround for MDL-26469
+       $record = $DB->get_record('modules', array('name'=>'flashcard'));
+       $record->cron = 3600;
+       $DB->update_record('modules', $record);
     }
     
 
