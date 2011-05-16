@@ -23,8 +23,7 @@ class flashcard_import_form extends moodleform{
     function definition(){
         
         $mform =& $this->_form;
-
-        $mform->addElement('hidden', 'id', $this->flashcardid); 
+        $mform->addElement('hidden', 'a', $this->flashcardid); 
         $mform->addElement('hidden', 'what', 'doimport'); 
         $mform->addElement('hidden', 'view', 'edit'); 
         

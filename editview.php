@@ -10,15 +10,14 @@
     * @license http://www.gnu.org/copyleft/gpl.html GNU Public License
     */
 
+    /* @var $OUTPUT core_renderer */
+
     if (!defined('MOODLE_INTERNAL')){
         error("Illegal direct access to this screen");
     }
 
     if ($action != ''){
         $result = include "{$CFG->dirroot}/mod/flashcard/editview.controller.php";
-        if ($result == -1){ // traps forms
-            echo $OUTPUT->footer($course);
-        }
     }
     
     $cards = $DB->get_records('flashcard_deckdata', array('flashcardid'=> $flashcard->id), 'id');
@@ -27,6 +26,7 @@
     $strquestion = get_string('question', 'flashcard');
     $stranswer = get_string('answer', 'flashcard');
     $strcommands = get_string('commands', 'flashcard');
+    $table = new html_table();
     $table->head = array('', "<b>$strquestionnum</b>", "<b>$strquestion</b>", "<b>$stranswer</b>", "<b>$strcommands</b>");
     $table->size = array('1%', '10%', '40%', '40%', '9%');
     $table->width = '100%';
@@ -88,7 +88,7 @@
             } else {
                 $answerinput = "<textarea name=\"a{$card->id}\" style=\"width: 100%\" rows=\"3\">{$text}</textarea>";
             }
-            $commands = "<a href=\"view.php?id={$cm->id}&amp;what=delete&amp;items={$card->id}&amp;view=edit\"><img src=\"{$CFG->pixpath}/t/delete.gif\" /></a>";
+            $commands = "<a href=\"view.php?id={$cm->id}&amp;what=delete&amp;items={$card->id}&amp;view=edit\"><img src=\"".$OUTPUT->pix_url('delete','flashcard')."\" /></a>";
             $table->data[] = array($checkbox, $i, $questioninput, $answerinput, $commands);
             $i++;
         }
@@ -102,7 +102,7 @@
 <input type="hidden" name="view" value="edit" />
 <?php    
 if (!empty($cards)){
-    print_table($table);
+    echo html_writer::table($table);
 ?>
 </center>
 <p><a href="Javascript:document.forms['editcard'].what.value = 'delete' ; document.forms['editcard'].submit()"><?php print_string('deleteselection', 'flashcard') ?></a></p>
@@ -129,7 +129,6 @@ if (!empty($cards)){
 }
 ?>
 <input type="button" name="add_btn" value="<?php print_string('addone', 'flashcard') ?>" onclick="document.forms['adddata'].add.value = 1 ; document.forms['adddata'].submit()" />&nbsp;
-<input type="button" name="add_btn" value="<?php print_string('addthree', 'flashcard') ?>" onclick="document.forms['adddata'].add.value = 3 ; document.forms['adddata'].submit()" />&nbsp;
-<input type="button" name="add_btn" value="<?php print_string('import', 'flashcard') ?>" onclick="document.forms['adddata'].what.value = 'import' ; document.forms['adddata'].submit()" />
+<input type="button" name="add_btn" value="<?php print_string('addthree', 'flashcard') ?>" onclick="document.forms['adddata'].add.value = 3 ; document.forms['adddata'].submit()" />
 </form>
 </center>

@@ -1,4 +1,4 @@
-<?PHP // $Id: index.php,v 1.3 2009/05/27 09:09:11 diml Exp $
+<?php
 
     /** 
     * This page prints a particular instance of a flashcard
@@ -6,7 +6,8 @@
     * @package mod-flashcard
     * @category mod
     * @author Gustav Delius
-    * @contributors Valery Fremaux
+    * @author Valery Fremaux
+    * @author Tomasz Muras
     * @license http://www.gnu.org/copyleft/gpl.html GNU Public License
     */
 
@@ -15,7 +16,7 @@
 
     $id = required_param('id', PARAM_INT);   // course
 
-    if (! $course = get_record('course', 'id', $id)) {
+    if (! $course = $DB->get_record('course', array('id' => $id))) {
         error("Course ID is incorrect");
     }
 

@@ -5,6 +5,7 @@
 * @package mod-flashcard
 * @category mod
 * @author Valery Fremaux
+* @author Tomasz Muras
 * @license http://www.gnu.org/copyleft/gpl.html GNU Public License
 *
 * @usecase add
@@ -13,6 +14,8 @@
 * @usecase import
 * @usecase doimport
 */
+
+/* @var $OUTPUT core_renderer */
 
 /******************************** Add new blank fields *****************************/
 if ($action == 'add'){
@@ -83,9 +86,10 @@ if ($action == 'save'){
 if ($action == 'import'){
     include 'import_form.php';
     $mform = new flashcard_import_form($flashcard->id);
-    echo $OUTPUT->heading(get_string('importingcards', 'flashcard').helpbutton('import', get_string('import', 'flashcard'), 'flashcard', true, false, '', true));
+    echo $OUTPUT->heading(get_string('importingcards', 'flashcard'). $OUTPUT->help_icon('import', 'flashcard'));
     $mform->display();
-    return -1;
+    echo $OUTPUT->footer($course);
+    exit(0);
 }
 /******************************** Perform import *****************************/
 if ($action == 'doimport'){

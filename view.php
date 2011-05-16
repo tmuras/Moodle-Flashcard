@@ -1,4 +1,4 @@
-<?php  // $Id: view.php,v 1.5 2008/12/28 15:44:56 diml Exp $
+<?php
 
     /** 
     * This page prints a particular instance of a flashcard
@@ -6,10 +6,13 @@
     * @package mod-flashcard
     * @category mod
     * @author Gustav Delius
-    * @contributors Valery Fremaux
+    * @author Valery Fremaux
+    * @author Tomasz Muras
     * @license http://www.gnu.org/copyleft/gpl.html GNU Public License
     * @version Moodle 2.0
     */
+    
+    /* @var $OUTPUT core_renderer */
 
     require_once('../../config.php');
     require_once($CFG->dirroot.'/mod/flashcard/lib.php');
@@ -25,7 +28,6 @@
     
     $url = new moodle_url('/mod/flashcard/view.php');
     $PAGE->set_url($url);
-
     if ($id) {
         if (! $cm = $DB->get_record('course_modules', array('id' => $id))) {
             print_error('invalidcoursemodule');
@@ -109,7 +111,11 @@
         case 'edit' : $currenttab = 'edit'; break;
         default : $currenttab = 'play';
     }
-
+    
+    if($action == 'import') {
+        $currenttab = 'import';
+    }
+    
 /// print tabs
     if (!preg_match("/summary|freeplay|play|checkdecks|edit/", $view)) $view = 'checkdecks';
     $tabname = get_string('leitnergame', 'flashcard');
@@ -121,6 +127,8 @@
         $row[] = new tabobject('summary', $thisurl."?view=summary&amp;id={$cm->id}&amp;page=byusers", $tabname);
         $tabname = get_string('edit', 'flashcard');
         $row[] = new tabobject('edit', $thisurl."?view=edit&amp;id={$cm->id}", $tabname);
+        $tabname = get_string('import', 'flashcard');
+        $row[] = new tabobject('import', $thisurl."?what=import&amp;view=edit&amp;id={$cm->id}", $tabname);  
     }
     $tabrows[] = $row;
     

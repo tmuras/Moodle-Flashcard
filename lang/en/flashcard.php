@@ -130,3 +130,17 @@ Typically, the Leitner system uses 3 decks. 4 decks will enlarge the memorizatio
 $string['autodowngrade_help'] = 'This option enables automatic downgrade of cards. A game is eroded if the learner does not review the game for some time (see times below). Cards that are too old back in the packets more difficult to return the first packet. The erosion rate depends on the setting of various delays for each packet.';
 $string['deck_release_help'] = 'Time in hours after which the cards go back into the upper deck. Each packet can be set differently.';
 $string['deck_delay_help'] = 'Adjustable time in hours at which the packet is marked to be revised.';
+$string['import_help'] = "You may massively import question/Answer pairs within a flashcard using the
+card bulk import feature.
+
+You just need to make a file with a list of questions/answers pairs and paste the content of that file in the importer's textarea.
+You may decide to encode this file with some kinds of common separators, on Linux or
+Windows systems. The most common may be \"one pair by line\" files, using ':' or comma to
+separate questions from answers.
+
+Questions will only comme first, and MUST always have an answer. Empty lines or black lines will be ignored, also those starting with a # or a slash (/).
+
+The importer will make a fast check of the text you want to import. It will reject
+the import if the text sequence is not well formed and tell you how many pairs are wrong in the file.
+
+As successfuly importing will erase all data from the decks but also belonging to participants, a confirmation checkbox needs to be checked in to force the import to be performed.";
