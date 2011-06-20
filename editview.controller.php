@@ -66,16 +66,16 @@ if ($action == 'save'){
         $card->id = $matches[1];
         $card->flashcardid = $flashcard->id;
         if ($flashcard->questionsmediatype != FLASHCARD_MEDIA_IMAGE_AND_SOUND){
-            $card->questiontext = required_param("q{$card->id}", PARAM_TEXT);
+            $card->questiontext = required_param("q{$card->id}", PARAM_CLEAN);
         } else {
             // combine image and sound in one single field
-            $card->questiontext = required_param("i{$card->id}", PARAM_TEXT).'@'.required_param("s{$card->id}", PARAM_TEXT);
+            $card->questiontext = required_param("i{$card->id}", PARAM_CLEAN).'@'.required_param("s{$card->id}", PARAM_CLEAN);
         }
         if ($flashcard->answersmediatype != FLASHCARD_MEDIA_IMAGE_AND_SOUND){
-            $card->answertext = required_param("a{$card->id}", PARAM_TEXT);
+            $card->answertext = required_param("a{$card->id}", PARAM_CLEAN);
         } else {
             // combine image and sound in one single field
-            $card->answertext = required_param("i{$card->id}", PARAM_TEXT).'@'.required_param("s{$card->id}", PARAM_TEXT);
+            $card->answertext = required_param("i{$card->id}", PARAM_CLEAN).'@'.required_param("s{$card->id}", PARAM_CLEAN);
         }
         if (!$DB->update_record('flashcard_deckdata', $card)){
             error("Could not update deck card");

@@ -152,7 +152,7 @@ foreach($subquestions as $subquestion){
                             echo "<br/>";
                             flashcard_play_sound($flashcard, $sound, 'false', false, "bell_f$i");
                         } else {
-                            echo format_string($subquestion->questiontext);
+                            echo format_text($subquestion->questiontext,FORMAT_HTML);
                         }
                         ?>
                     </td>
@@ -179,7 +179,7 @@ foreach($subquestions as $subquestion){
                             echo "<br/>";
                             flashcard_play_sound($flashcard, $sound, 'false', false, "bell_b$i");
                         } else {
-                            echo format_string($subquestion->answertext);
+                            echo format_text($subquestion->answertext,FORMAT_HTML);
                         }
                         ?>
     		        </td>

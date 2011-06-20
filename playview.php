@@ -130,7 +130,7 @@ function togglecard(){
                             echo "<br/>";
                             flashcard_play_sound($flashcard, $sound, 'false', false, 'bell_q');
                         } else {
-                            echo format_string($subquestion->questiontext);
+                            echo format_text($subquestion->questiontext,FORMAT_HTML);
                         }
                         ?>
             </div>
@@ -146,7 +146,7 @@ function togglecard(){
                             echo "<br/>";
                             flashcard_play_sound($flashcard, $sound, 'false', false, 'bell_a');
                         } else {
-                            echo format_string($subquestion->answertext);
+                            echo format_text($subquestion->answertext,FORMAT_HTML);
                         }
                         ?>
             </div>
