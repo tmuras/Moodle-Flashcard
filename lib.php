@@ -20,16 +20,6 @@ if (file_exists($CFG->libdir.'/filesystemlib.php')){
 require_once($CFG->dirroot.'/lib/ddllib.php');
 require_once($CFG->dirroot.'/mod/flashcard/locallib.php');
 
-// patch the question match if it hasn't be done
-global $DB;
-$dbman = $DB->get_manager();
-$table = new xmldb_table('question_match');
-$field = new xmldb_field('numquestions');
-$field->set_attributes (XMLDB_TYPE_INTEGER, '10', 'true', 'true', null, null, null, '0');
-if (!$dbman->field_exists($table, $field)){
-    $dbman->add_field($table, $field, true, true);
-}
-
 /**
 * Given an object containing all the necessary data, 
 * (defined by the form in mod.html) this function 
