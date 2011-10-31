@@ -1,4 +1,9 @@
 <?php
+/* @var $DB mysqli_native_moodle_database */
+/* @var $OUTPUT core_renderer */
+/* @var $PAGE moodle_page */
+?>
+<?php
 
 /**
 * internal library of functions and constants for module flashcard
@@ -80,7 +85,7 @@ function flashcard_print_deck(&$cm, $deck){
 * @uses $CFG
 */
 function flashcard_print_deck_status(&$flashcard, $userid, &$status, $return){
-    global $CFG;
+    global $CFG, $OUTPUT;
 
     $str = '';
     
@@ -113,7 +118,7 @@ function flashcard_print_deck_status(&$flashcard, $userid, &$status, $return){
         $str .= "<div height=\"12px\" align=\"top\"><img src=\"{$CFG->wwwroot}/mod/flashcard/pix/topempty.png\" /></div>";
     }
     
-    $str .= "</td><td><img src=\"{$CFG->pixpath}/a/r_breadcrumb.gif\"></td><td width=\"30%\" align=\"center\">";
+    $str .= "</td><td>". $OUTPUT->pix_icon('a/r_breadcrumb', 'right breadcrumb icon') ."</td><td width=\"30%\" align=\"center\">";
 
     // print for deck 2
     if ($status->decks[1]->count){
@@ -142,7 +147,7 @@ function flashcard_print_deck_status(&$flashcard, $userid, &$status, $return){
     }
 
     if ($flashcard->decks >= 3){
-        $str .= "</td><td><img src=\"{$CFG->pixpath}/a/r_breadcrumb.gif\"></td><td width=\"30%\" align=\"center\">";
+        $str .= "</td><td>".$OUTPUT->pix_icon('a/r_breadcrumb', 'right breadcrumb icon')."</td><td width=\"30%\" align=\"center\">";
 
         // print for deck 3
         if ($status->decks[2]->count){
@@ -171,7 +176,7 @@ function flashcard_print_deck_status(&$flashcard, $userid, &$status, $return){
         }
     }
     if ($flashcard->decks >= 4){
-        $str .= "</td><td><img src=\"{$CFG->pixpath}/a/r_breadcrumb.gif\"></td><td width=\"30%\" align=\"center\">";
+        $str .= "</td><td>".$OUTPUT->pix_icon('a/r_breadcrumb', 'right breadcrumb icon')."</td><td width=\"30%\" align=\"center\">";
 
         // print for deck 4
         if ($status->decks[3]->count){
