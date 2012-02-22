@@ -373,12 +373,14 @@ function flashcard_import(&$flashcard){
 	}
 
     $options = $DB->get_record('question_match', array('question' => $question->id));
-    list($usql, $params) = $DB->get_in_or_equal($options->subquestions);
+    list($usql, $params) = $DB->get_in_or_equal(explode(",",$options->subquestions));
     if ($subquestions = $DB->get_records_select('question_match_sub', "id $usql AND answertext != '' AND questiontext != ''", $params)){
-        
+    	
         // cleanup the flashcard
         $DB->delete_records('flashcard_card', array('flashcardid' => $flashcard->id));
         $DB->delete_records('flashcard_deckdata', array('flashcardid' => $flashcard->id));
+
+        
         
         // transfer data
         foreach($subquestions as $subquestion){
