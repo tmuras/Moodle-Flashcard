@@ -16,8 +16,9 @@
         print_error("Illegal direct access to this screen");
     }
 
-    if ($action != ''){
-        include $CFG->dirroot.'/mod/flashcard/usersummaryview.controller.php';
+    if ($action == 'reset'){
+        $userid = required_param('userid', PARAM_INT);
+        $DB->delete_records('flashcard_card', array('flashcardid' => $flashcard->id, 'userid' => $userid));
     }
 
     require_once($CFG->dirroot.'/enrol/locallib.php');
@@ -56,5 +57,4 @@
         print_box(get_string('nousers', 'flashcard'));
         echo '</center>';
     }
-    
-?>
+
