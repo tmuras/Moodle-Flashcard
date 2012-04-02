@@ -1,9 +1,6 @@
 <?php
 
 /**
- * Code fragment to define the module version etc.
- * This fragment is called by /admin/index.php
- *
  * @package mod-flashcard
  * @copyright Valery Fremaux
  * @copyright 2011 onwards Tomasz Muras
@@ -13,6 +10,6 @@
 $module->version  = 2012040100;  // The current module version (Date: YYYYMMDDXX)
 $module->requires = 2011000000;  // Requires this Moodle version
 $module->cron     = 3600; // Period for cron to check this module (secs)
-$module->maturity  = MATURITY_RC;
-$module->release   = "2.0 ({$module->version})"; // User-friendly version number
+$module->component = 'mod_flashcard'; // Full name of the plugin (used for diagnostics)
+
 
