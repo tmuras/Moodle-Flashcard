@@ -36,5 +36,9 @@ class restore_flashcard_activity_task extends restore_activity_task {
         return $rules;
 
     }
-
+    static public function define_restore_log_rules() {
+        $rules = array();
+        
+        return $rules;
+    }
 }

@@ -65,6 +65,8 @@ class restore_flashcard_activity_structure_step extends restore_activity_structu
         $data->flashcardid = $this->get_new_parentid('flashcard');
         $data->userid = $this->get_mappingid('user', $data->userid);
         $data->entryid = $this->get_mappingid('flashcard_deck', $data->entryid);
+        
+        $newid = $DB->insert_record('flashcard_card', $data);
     }
     
     protected function after_execute() {
