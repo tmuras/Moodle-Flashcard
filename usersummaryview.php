@@ -25,13 +25,14 @@
     
     $course_context = get_context_instance(CONTEXT_COURSE, $COURSE->id);
     $course = $DB->get_record('course', array('id'=>$COURSE->id), '*', MUST_EXIST);
-    $manager = new course_enrolment_manager($course);
+    $manager = new course_enrolment_manager($PAGE,$course);
     $courseusers = $manager->get_users('lastseen');
 
     $struser = get_string('username');
     $strdeckstates = get_string('deckstates', 'flashcard');
     $strcounts = get_string('counters', 'flashcard');
-
+    
+    $table = new html_table();
     $table->head = array("<b>$struser</b>", "<b>$strdeckstates</b>", "<b>$strcounts</b>");
     $table->size = array('30%', '50%', '20%');
     $table->width = '90%';
@@ -51,7 +52,7 @@
             }
             $table->data[] = array($userbox, $deckbox, $countbox);
         }    
-        print_table($table);
+        echo html_writer::table($table);
     } else {
         echo '<center>';
         print_box(get_string('nousers', 'flashcard'));
