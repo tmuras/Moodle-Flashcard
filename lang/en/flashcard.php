@@ -85,6 +85,7 @@ $string['numericrequired'] = 'A number is required.';
 $string['outoftimerange'] = 'This module is closed by time range. You cannot use it now.';
 $string['playwithme'] = 'Learn with that deck';
 $string['pluginadministration'] = 'Flashcard administration.';
+$string['pluginname'] = 'Flashcard';
 $string['previous'] = 'Previous card';
 $string['question'] = 'Questions';
 $string['questionid'] = 'Question to import';
