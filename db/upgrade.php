@@ -13,15 +13,6 @@ function xmldb_flashcard_upgrade($oldversion = 0) {
 
 //===== 1.9.0 upgrade line ======//
 
-    // this should patch the question_match anyway
-
-    $table = new xmldb_table('question_match');
-    $field = new xmldb_field('numquestions');
-    $field->set_attributes (XMLDB_TYPE_INTEGER, '10', 'true', 'true', null, null, null, '0');
-    if (!$dbman->field_exists($table, $field)){
-        $dbman->add_field($table, $field, true, true);
-    }
-
     if ($oldversion < 2008050400){
     
     /// Define field starttime to be added to flashcard
