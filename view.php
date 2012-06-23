@@ -109,6 +109,7 @@
         case 'freeplay' : $currenttab = 'freeplay'; break;
         case 'summary' : $currenttab = 'summary'; break;
         case 'edit' : $currenttab = 'edit'; break;
+        case 'add' : $currenttab = 'edit'; break;        
         default : $currenttab = 'play';
     }
     
@@ -117,7 +118,7 @@
     }
     
 /// print tabs
-    if (!preg_match("/summary|freeplay|play|checkdecks|edit/", $view)) $view = 'checkdecks';
+    if (!preg_match("/(summary)|(freeplay)|(play)|(checkdecks)|(edit)|(add)/", $view)) $view = 'checkdecks';
     $tabname = get_string('leitnergame', 'flashcard');
     $row[] = new tabobject('play', $thisurl."?id={$cm->id}&amp;view=checkdecks", $tabname);
     $tabname = get_string('freegame', 'flashcard');
@@ -185,6 +186,12 @@
             }
             include $CFG->dirroot.'/mod/flashcard/editview.php';
             break;
+        case 'add' : 
+            if (!has_capability('mod/flashcard:manage', $context)){
+                redirect($thisurl."?view=checkdecks&amp;id={$cm->id}");
+            }
+            include $CFG->dirroot.'/mod/flashcard/addview.php';
+            break;
         case 'freeplay' :
             include $CFG->dirroot.'/mod/flashcard/freeplayview.php';
             break;
@@ -196,6 +203,4 @@
     }
 
 /// Finish the page
-
     echo $OUTPUT->footer($course);
-?>
