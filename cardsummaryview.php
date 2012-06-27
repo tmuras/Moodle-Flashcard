@@ -36,6 +36,6 @@
         $cardcounters = flashcard_print_cardcounts($flashcard, $acard, true);
         $table->data[] = array(format_string($cardquestion), $cardcounters, $acard->accesscount);
     }    
-    
+    echo $out;
     print_table($table);
 ?>

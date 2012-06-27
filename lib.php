@@ -255,3 +255,51 @@ function flashcard_supports($feature) {
         default: return null;
     }
 }
+
+
+function flashcard_pluginfile($course, $cm, $context, $filearea, $args, $forcedownload) {
+  global $CFG, $DB, $USER;
+
+  require_login($course, false, $cm);
+
+  $itemid = (int) array_shift($args);
+
+  require_course_login($course, true, $cm);
+
+  $relativepath = implode('/', $args);
+  $fullpath = "/$context->id/mod_flashcard/$filearea/$itemid/$relativepath";
+
+  $fs = get_file_storage();
+  if (!$file = $fs->get_file_by_hash(sha1($fullpath)) or $file->is_directory()) {
+    return false;
+  }
+/*
+  if (!$cm = get_coursemodule_from_id('journal', $cm->id)) {
+    return false;
+  }
+
+  if (!$journal = $DB->get_record("journal", array("id" => $cm->instance))) {
+    return false;
+  }
+
+ // $userjournal = journal_get_userjournal($journal, $USER);
+  if(!$entry = $DB->get_record('journal_entries', array('id'=>$itemid))) {
+    return false;
+  }
+
+ // $context = get_context_instance(CONTEXT_MODULE, $context->id);
+
+  //allow if it is my own entry or teacher 
+  if (!has_capability('mod/journal:manageentries', $context)) {
+    require_capability('mod/journal:addentries', $context);
+    //plus my own journal entry
+    if ($entry->userid != $USER->id) {
+      return false;
+    }
+  }
+*/
+  // finally send the file
+  send_stored_file($file, 0, 0, true); // download MUST be forced - security!
+
+  return false;
+}

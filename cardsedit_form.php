@@ -10,17 +10,25 @@ class flashcard_cardsedit_form extends moodleform {
         global $COURSE, $CFG, $DB, $PAGE;
 
         $mform = $this->_form;
-        //$cards = $this->_customdata;
+        if (isset($this->_customdata['noaddbutton']) && $this->_customdata['noaddbutton']) {
+            $noaddbutton = true;
+        } else {
+            $noaddbutton = false;
+        }
 
-        $mform->addElement('hidden','id');
-        $mform->addElement('hidden','view');
-        
+        $context = $this->_customdata['context'];
+
+        $mform->addElement('hidden', 'id');
+        $mform->addElement('hidden', 'view');
+
         for ($i = 0; $i < $this->numelements; $i++) {
-            $mform->addElement('editor', "question[$i]", "QUESTION");
-            $mform->addElement('editor', "answer[$i]", "ANSWER");
+            $mform->addElement('editor', "question[$i]", get_string('question', 'flashcard'), null,
+                    array('context' => $context, 'maxfiles' => EDITOR_UNLIMITED_FILES,'noclean'=>true));
+            $mform->addElement('editor', "answer[$i]", get_string('answer', 'flashcard'), null,
+                    array('context' => $context, 'maxfiles' => EDITOR_UNLIMITED_FILES,'noclean'=>true));
             $mform->addElement('hidden', "cardid[$i]");
         }
-        
+
 
         //-------------------------------------------------------------------------------
 //        $mform->addElement('header', 'general', get_string('general', 'form'));
@@ -36,8 +44,9 @@ class flashcard_cardsedit_form extends moodleform {
 
           }
          */
-        $mform->addElement('submit', 'addmore', "Save and add new page");
-
+        if (!$noaddbutton) {
+            $mform->addElement('submit', 'addmore', "Save and add new page");
+        }
         $this->add_action_buttons();
     }
 

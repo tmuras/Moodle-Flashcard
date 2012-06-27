@@ -550,26 +550,43 @@ function flashcard_print_cardcounts(&$flashcard, $card, $return = false) {
 }
 
 /**
- * Get array of questions & answers for edit $page 
+ * Get array of questions & answers for edit $page
+ * If $page == -1 then take the last page
  * @param type $flashcard
  * @param type $page 
  */
 function flashcard_get_page($flashcard, $page) {
-    global $DB;
+    global $DB, $CFG;
 
+    if ($page == -1) {
+        //take the last page
+        $cardsnum = $DB->count_records('flashcard_deckdata', array('flashcardid' => $flashcard->id));
+        $page = (int) ($cardsnum / FLASHCARD_CARDS_PER_PAGE);
+    }
     $cards = $DB->get_records('flashcard_deckdata', array('flashcardid' => $flashcard->id), 'id', '*',
             FLASHCARD_CARDS_PER_PAGE * $page, FLASHCARD_CARDS_PER_PAGE);
 
+    $cm = get_coursemodule_from_instance('flashcard', $flashcard->id);
+    $context = context_module::instance($cm->id);
 
     $ret = new object();
     $ret->answer = array();
     $ret->question = array();
     $ret->id = array();
-
+    $editoroptions = array('context'=>$context ,'maxfiles' => EDITOR_UNLIMITED_FILES, 'maxbytes'=>$CFG->maxbytes, 'trusttext'=>true, 'noclean'=>true);
+    
     $i = 0;
     foreach ($cards as $card) {
-        $ret->answer[$i]['text'] = $card->answertext;
-        $ret->question[$i]['text'] = $card->questiontext;
+        $itemid = NULL;
+        $currenttext = file_prepare_draft_area($itemid, $context->id, 'mod_flashcard', 'question', $card->id,
+                $editoroptions, $card->questiontext);
+        $ret->question[$i] = array('text' => $currenttext, 'format' => 1, 'itemid' => $itemid);
+
+        $itemid = NULL;
+        $currenttext = file_prepare_draft_area($itemid, $context->id, 'mod_flashcard', 'answer', $card->id,
+                $editoroptions, $card->answertext);
+        $ret->answer[$i] = array('text' => $currenttext, 'format' => 1, 'itemid' => $itemid);
+
         $ret->id[$i] = $card->id;
         $i++;
     }

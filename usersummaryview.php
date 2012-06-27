@@ -37,6 +37,8 @@
     $table->size = array('30%', '50%', '20%');
     $table->width = '90%';
     
+    echo $out;
+    
     if (!empty($courseusers)){
         foreach($courseusers as $auser){
             $status = flashcard_get_deck_status($flashcard, $auser->id);
@@ -55,7 +57,7 @@
         echo html_writer::table($table);
     } else {
         echo '<center>';
-        print_box(get_string('nousers', 'flashcard'));
+        $OUTPUT->box(get_string('nousers', 'flashcard'));
         echo '</center>';
     }
 
