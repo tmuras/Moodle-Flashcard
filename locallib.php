@@ -369,46 +369,6 @@ function flashcard_initialize(&$flashcard, $userid) {
 }
 
 /**
- * imports data into the deck from a matching question. This allows making a quiz with questions
- * then importing data to form a card deck.
- * @param reference $flashcard
- * @uses $DB
- * @return void
- */
-function flashcard_import(&$flashcard) {
-    global $DB;
-
-    $question = $DB->get_record('question', array('id' => $flashcard->questionid));
-
-    if ($question->qtype != 'match') {
-        notice("Not a match question. Internal error");
-        return;
-    }
-
-    $options = $DB->get_record('question_match', array('question' => $question->id));
-    list($usql, $params) = $DB->get_in_or_equal(explode(",", $options->subquestions));
-    if ($subquestions = $DB->get_records_select('question_match_sub',
-            "id $usql AND answertext != '' AND questiontext != ''", $params)) {
-
-        // cleanup the flashcard
-        $DB->delete_records('flashcard_card', array('flashcardid' => $flashcard->id));
-        $DB->delete_records('flashcard_deckdata', array('flashcardid' => $flashcard->id));
-
-
-
-        // transfer data
-        foreach ($subquestions as $subquestion) {
-            $deckdata->flashcardid = $flashcard->id;
-            $deckdata->questiontext = $subquestion->questiontext;
-            $deckdata->answertext = $subquestion->answertext;
-            $deckdata->lastaccessed = 0;
-            $DB->insert_record('flashcard_deckdata', $deckdata);
-        }
-    }
-    return true;
-}
-
-/**
  * get count, last access time and reactivability for all decks
  * @param reference $flashcard
  * @param int $userid

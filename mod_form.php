@@ -1,14 +1,12 @@
 <?php
 
 /** 
-* This view allows checking deck states
-* 
 * @package mod-flashcard
 * @category mod
 * @author Gustav Delius
-* @contributors Valery Fremaux
+* @author Valery Fremaux
+* @author Tomasz Muras
 * @license http://www.gnu.org/copyleft/gpl.html GNU Public License
-* @version Moodle 2.0
 */
 
 /**
@@ -54,44 +52,6 @@ class mod_flashcard_mod_form extends moodleform_mod {
         $enddatearray[] = &$mform->createElement('checkbox', 'endtimeenable', '');
         $mform->addGroup($enddatearray, 'endfrom', get_string('endtime', 'flashcard'), ' ', false);
         $mform->disabledIf('endfrom', 'endtimeenable');
-
-        if (!$questions = $DB->get_records_select('question', "qtype='match'", null, 'id, name')) {
-            $questions = array();
-        } else {
-            // prepared for 1.9 questionbanck compatibility
-            if (function_exists('question_has_capability_on')){
-
-                function drop_questions($a){
-                    return question_has_capability_on($a->id, 'use');
-                }
-
-                $questions = array_filter($questions, 'drop_questions');
-            }
-        }
-        $qoptions = array();
-        foreach($questions as $question){
-            $qoptions[$question->id] = $question->name;
-        }
-        $mform->addElement('select', 'questionid', get_string('questionid', 'flashcard'), $qoptions);
-
-        $mform->addHelpButton('questionid', 'sourcequestion', 'flashcard');
-
-        $mform->addElement('checkbox', 'forcereload', get_string('forcereload', 'flashcard'));
-        $mform->addHelpButton('forcereload', 'forcereload', 'flashcard');
-
-        $stylingtext = get_string('customisation', 'flashcard', $CFG->wwwroot."/files/index.php?id={$COURSE->id}&amp;wdir=%2Fmoddata%2Fflashcard");
-        $stylingtext .= "<br/><br/><center><a href=\"$CFG->wwwroot/mod/flashcard/styles.php\" target=\"_blank\">".get_string('stylesheet', 'flashcard')."</a></center>";
-        $mform->addElement('static', 'style', get_string('styling', 'flashcard'), $stylingtext);
-
-        $mediaoptions[FLASHCARD_MEDIA_TEXT] = get_string('text', 'flashcard');
-        $mediaoptions[FLASHCARD_MEDIA_IMAGE] = get_string('image', 'flashcard');
-        $mediaoptions[FLASHCARD_MEDIA_SOUND] = get_string('sound', 'flashcard');
-        $mediaoptions[FLASHCARD_MEDIA_IMAGE_AND_SOUND] = get_string('imageplussound', 'flashcard');
-        $mform->addElement('select', 'questionsmediatype', get_string('questionsmediatype', 'flashcard'), $mediaoptions);
-        $mform->addHelpButton('questionsmediatype', 'mediatypes', 'flashcard');
-        
-        $mform->addElement('select', 'answersmediatype', get_string('answersmediatype', 'flashcard'), $mediaoptions);
-        $mform->addHelpButton('answersmediatype', 'mediatypes', 'flashcard');
 
         $mform->addElement('selectyesno', 'flipdeck', get_string('flipdeck', 'flashcard'));
         $mform->addHelpButton('flipdeck', 'flipdeck', 'flashcard');

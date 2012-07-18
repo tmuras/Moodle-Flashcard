@@ -40,14 +40,6 @@ function flashcard_add_instance($flashcard) {
 
     $newid = $DB->insert_record('flashcard', $flashcard);
 
-    // Make physical repository for customisation
-    filesystem_create_dir($COURSE->id . '/moddata/flashcard/' . $newid, FS_RECURSIVE);
-
-    // Import all information from question
-    if (isset($flashcard->forcereload) && $flashcard->forcereload) {
-        flashcard_import($flashcard);
-    }
-
     return $newid;
 }
 
@@ -67,12 +59,6 @@ function flashcard_update_instance($flashcard) {
     // Make physical repository for customisation
     if (!file_exists($COURSE->id . '/moddata/flashcard/' . $flashcard->id)) {
         filesystem_create_dir($COURSE->id . '/moddata/flashcard/' . $flashcard->id, FS_RECURSIVE);
-    }
-
-    // update first deck with questions that might be added
-
-    if (isset($flashcard->forcereload) && $flashcard->forcereload) {
-        flashcard_import($flashcard);
     }
 
     if (!isset($flashcard->starttimeenable)) {
