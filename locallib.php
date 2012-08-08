@@ -380,13 +380,15 @@ function flashcard_get_deck_status(&$flashcard, $userid = 0) {
 
     if ($userid == 0) $userid = $USER->id;
 
-    unset($status);
+    $status = new stdClass();
 
     $dk3 = 0;
     $dk4 = 0;
     $dk1 = $DB->count_records('flashcard_card', array('flashcardid' => $flashcard->id, 'userid' => $userid, 'deck' => 1));
+    $status->decks[0] = new stdClass();
     $status->decks[0]->count = $dk1;
     $dk2 = $DB->count_records('flashcard_card', array('flashcardid' => $flashcard->id, 'userid' => $userid, 'deck' => 2));
+    $status->decks[1] = new stdClass();
     $status->decks[1]->count = $dk2;
     if ($flashcard->decks >= 3) {
         $dk3 = $DB->count_records('flashcard_card',

@@ -123,13 +123,12 @@ class mod_flashcard_mod_form extends moodleform_mod {
             $starttimeenable->setValue(true);
         }
 	}*/
-	
-	function validation($data) {
-	    $errors = array();
+        public function validation($data, $files) {
+	    $errors = parent::validation($data, $files);
 
-        if ($data['starttime'] > $data['endtime']){
-            $errors['endfrom'] = get_string('mustbehigherthanstart', 'flashcard');
-        }
+            if ($data['starttime'] > $data['endtime']){
+                $errors['endfrom'] = get_string('mustbehigherthanstart', 'flashcard');
+            }
 	    
 	    if ($data['decks'] >= 2){
 	        if ($data['deck1_delay'] > $data['deck2_delay']) {
