@@ -1,5 +1,12 @@
 <?php
-// matching.php - created with Moodle 1.9 development
+/**
+ * Strings for component 'flashcard', language 'en'
+ *
+ * @package    mod
+ * @subpackage flashcard
+ * @copyright  Valery Fremaux, Tomasz Muras
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 
 $string['addone'] = 'Add a new question';
 $string['addthree'] = 'Add three new questions';
