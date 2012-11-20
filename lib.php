@@ -289,3 +289,14 @@ function flashcard_pluginfile($course, $cm, $context, $filearea, $args, $forcedo
 
   return false;
 }
+
+
+/**
+ * Scale is not used anywhere by flashcard module
+ *
+ * @param int $scaleid
+ * @return bool
+ */
+function flashcard_scale_used_anywhere($scaleid) {
+    return false;
+}
