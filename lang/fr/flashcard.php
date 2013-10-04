@@ -99,4 +99,5 @@ $string['undefinedquestionset'] = 'Aucun jeu de questions n\'a été défini pou
 $string['userdecks'] = 'Paquets des utilisateurs';
 $string['userdecks'] = 'Paquets des utilisateurs';
 $string['viewed'] = 'Affichages';
+$string['saveadd'] = 'Enregistrer et ajouter nouvelle page';
 ?>

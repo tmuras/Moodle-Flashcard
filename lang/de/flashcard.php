@@ -180,3 +180,5 @@ The importer will make a fast check of the text you want to import. It will reje
 the import if the text sequence is not well formed and tell you how many pairs are wrong in the file.
 
 As successfuly importing will erase all data from the decks but also belonging to participants, a confirmation checkbox needs to be checked in to force the import to be performed.";
+$string['saveadd'] = 'Speichern und neue Seite hinzufügen'
+?>
