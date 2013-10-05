@@ -3,9 +3,6 @@
 /* @var $DB mysqli_native_moodle_database */
 /* @var $OUTPUT core_renderer */
 /* @var $PAGE moodle_page */
-?>
-<?php
-
 /**
  * internal library of functions and constants for module flashcard
  * @package mod-flashcard
@@ -393,11 +390,13 @@ function flashcard_get_deck_status(&$flashcard, $userid = 0) {
     if ($flashcard->decks >= 3) {
         $dk3 = $DB->count_records('flashcard_card',
                 array('flashcardid' => $flashcard->id, 'userid' => $userid, 'deck' => 3));
+        $status->decks[2] = new stdClass();
         $status->decks[2]->count = $dk3;
     }
     if ($flashcard->decks >= 4) {
         $dk4 = $DB->count_records('flashcard_card',
                 array('flashcardid' => $flashcard->id, 'userid' => $userid, 'deck' => 4));
+        $status->decks[3] = new stdClass();
         $status->decks[3]->count = $dk4;
     }
 
