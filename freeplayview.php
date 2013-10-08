@@ -87,7 +87,7 @@ $subquestions = draw_rand_array($subquestions, count($subquestions));
         }
     }
       
-    function remove(){
+    function disable(){
         remaining--;
         document.getElementById('remain').innerHTML = remaining;
         if (remaining == 0){
@@ -128,7 +128,7 @@ $subquestions = draw_rand_array($subquestions, count($subquestions));
                 echo '<center>';
                 $divid = "f$i";
                 $divstyle = ($i > 0) ? 'display:none' : '';
-                echo "<div id=\"{$divid}\" style=\"{$divstyle}\" class=\"backside\"";
+                echo "<div id=\"{$divid}\" style=\"border-style: dashed; width: 300px; margin: 10px auto 10px auto; padding: 10px 30px; {$divstyle}\" class=\"frontside\"";
                 echo " onclick=\"javascript:clicked('f', '{$i}')\">";
 
                 if ($flashcard->flipdeck) {
@@ -137,44 +137,29 @@ $subquestions = draw_rand_array($subquestions, count($subquestions));
                     $subquestion->answertext = $subquestion->questiontext;
                     $subquestion->questiontext = $tmp;
                 }
-                ?>
-                <table class="flashcard_question" width="100%" height="100%">
-                    <tr>
-                        <td align="center" valign="center">
-                            <?php
-                            $questiontext = file_rewrite_pluginfile_urls($subquestion->questiontext, 'pluginfile.php',
-                                    $context->id, 'mod_flashcard', 'question', $subquestion->id);
-                            $options = new stdClass();
-                            $options->noclean = true;
-                            $options->overflowdiv = true;
+                
+                $questiontext = file_rewrite_pluginfile_urls($subquestion->questiontext, 'pluginfile.php',
+                $context->id, 'mod_flashcard', 'question', $subquestion->id);
+                $options = new stdClass();
+                $options->noclean = true;
+                $options->overflowdiv = true;
 
-                            echo format_text($questiontext, FORMAT_HTML);
-                            ?>
-                        </td>
-                    </tr>
-                </table>
+                echo format_text($questiontext, FORMAT_HTML);
+                ?>
                 </div>
-                </center>
+				</center>
         <center>
             <?php
-            echo "<div id=\"b{$i}\" style=\"display: none\" class=\"frontside\"";
+            echo "<div id=\"b{$i}\" style=\"border-style: dashed; width: 300px; margin: 10px auto 10px auto; padding: 10px 30px; display: none\" class=\"backside\"";
             echo " onclick=\"javascript:clicked('b', '{$i}')\">";
-            ?>
-            <table class="flashcard_answer" width="100%" height="100%">
-                <tr>
-                    <td align="center" valign="center" style="">
-                        <?php
-                        $answertext = file_rewrite_pluginfile_urls($subquestion->answertext, 'pluginfile.php',
-                                $context->id, 'mod_flashcard', 'answer', $subquestion->id);
-                        $options = new stdClass();
-                        $options->noclean = true;
-                        $options->overflowdiv = true;
+            $answertext = file_rewrite_pluginfile_urls($subquestion->answertext, 'pluginfile.php',
+            $context->id, 'mod_flashcard', 'answer', $subquestion->id);
+            $options = new stdClass();
+            $options->noclean = true;
+            $options->overflowdiv = true;
 
-                        echo format_text($answertext, FORMAT_HTML);
-                        ?>
-                    </td>
-                </tr>
-            </table>
+            echo format_text($answertext, FORMAT_HTML);
+            ?>
             </div>
         </center>
         <?php
@@ -222,7 +207,7 @@ $subquestions = draw_rand_array($subquestions, count($subquestions));
     <td width="200px">
         <input id="remove" type="button" value="<?php print_string('removecard',
                                 'flashcard')
-                        ?>" onclick="javascript:remove()" />
+                        ?>" onclick="javascript:disable()" />
     </td>
 </tr>
 <tr>
