@@ -36,6 +36,7 @@ if ($action == 'reset'){
 }
 /*---------------------------------- a card was declared right --------------------*/
 if ($action == 'igotit'){       
+	$card = new StdClass();
     $card->id = required_param('cardid', PARAM_INT);
     $card = $DB->get_record('flashcard_card', array('id' => $card->id));    
     if ($card->deck < $flashcard->decks){
@@ -56,6 +57,7 @@ if ($action == 'igotit'){
 }
 /*------------------------------ a card was declared wrong -----------------------*/
 if ($action == 'ifailed'){
+	$card = new StdClass();
     $card->id = required_param('cardid', PARAM_INT);
     $card = $DB->get_record('flashcard_card', array('id' => $card->id));
     $card->lastaccessed = time();
