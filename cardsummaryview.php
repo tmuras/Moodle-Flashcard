@@ -27,7 +27,8 @@
     $strcard = get_string('card', 'flashcard');
     $strviewed = get_string('viewed', 'flashcard');
     $strdecks = get_string('decks', 'flashcard');
-
+	
+    $table = new html_table();
     $table->head = array("<b>$strcard</b>", "<b>$strdecks</b>", "<b>$strviewed</b>");
     $table->size = array('30%', '35%', '35%');
     $table->width = "90%";
@@ -37,5 +38,5 @@
         $table->data[] = array(format_string($cardquestion), $cardcounters, $acard->accesscount);
     }    
     echo $out;
-    print_table($table);
+    echo html_writer::table($table);
 ?>
