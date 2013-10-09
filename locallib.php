@@ -349,6 +349,7 @@ function flashcard_initialize(&$flashcard, $userid) {
     if ($subquestions = $DB->get_records('flashcard_deckdata', array('flashcardid' => $flashcard->id), '', 'id,id')) {
         foreach ($subquestions as $subquestion) {
             if (in_array($subquestion->id, $registered)) continue;
+            $card = new StdClass();
             $card->userid = $userid;
             $card->flashcardid = $flashcard->id;
             $card->lastaccessed = time() - ($flashcard->deck1_delay * HOURSECS);
