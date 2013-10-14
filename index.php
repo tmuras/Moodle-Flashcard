@@ -21,7 +21,7 @@
     }
 
     require_login($course->id);
-
+	$PAGE->set_url('/mod/flashcard/index.php', array('id' => $course->id));
     add_to_log($course->id, 'flashcard', 'view all', "index.php?id=$course->id", '');
 
 
@@ -52,6 +52,8 @@
     $strname  = get_string('name');
     $strweek  = get_string('week');
     $strtopic  = get_string('topic');
+    $table = new html_table();
+    
 
     if ($course->format == 'weeks') {
         $table->head  = array ($strweek, $strname);
@@ -82,10 +84,10 @@
 
     echo '<br/>';
 
-    print_table($table);
+    echo html_writer::table($table);
 
 /// Finish the page
 
-    print_footer($course);
+    $OUTPUT->footer();
 
 ?>
