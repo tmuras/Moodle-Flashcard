@@ -60,18 +60,18 @@ function flashcard_print_deck(&$cm, $deck) {
     global $CFG;
 
     if ($deck == 0) {
-        echo "<img src=\"{$CFG->wwwroot}/mod/flashcard/pix/emptydeck.jpg\"/>";
+        echo "<img src=\"{$CFG->wwwroot}/mod/flashcard/pix/emptydeck.png\"/>";
     }
 
     if ($deck > 0) {
         echo "<a href=\"view.php?view=play&amp;id={$cm->id}&amp;deck={$deck}&amp;what=initialize\" title=\"" . get_string('playwithme',
-                'flashcard') . "\"><img src=\"{$CFG->wwwroot}/mod/flashcard/pix/enableddeck.jpg\"/></a>";
+                'flashcard') . "\"><img src=\"{$CFG->wwwroot}/mod/flashcard/pix/enableddeck.png\"/></a>";
     }
 
     if ($deck < 0) {
         $deck = -$deck;
         echo "<a href=\"view.php?view=play&amp;id={$cm->id}&amp;deck={$deck}&amp;what=initialize\" title=\"" . get_string('reinforce',
-                'flashcard') . "\"><img src=\"{$CFG->wwwroot}/mod/flashcard/pix/disableddeck.jpg\"/></a>";
+                'flashcard') . "\"><img src=\"{$CFG->wwwroot}/mod/flashcard/pix/disableddeck.png\"/></a>";
     }
 }
 
