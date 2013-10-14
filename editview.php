@@ -3,8 +3,6 @@
 /* @var $DB mysqli_native_moodle_database */
 /* @var $OUTPUT core_renderer */
 /* @var $PAGE moodle_page */
-?>
-<?php
 
 /**
  * This view provides a way for editing questions
@@ -89,6 +87,7 @@ if ($fromform && isset($fromform->addmore)) {
     $pagedata = flashcard_get_page($flashcard, $page);
 }
 echo $out;
+echo $OUTPUT->paging_bar($cardsnum, $page, FLASHCARD_CARDS_PER_PAGE, $url);
 $toform = new object();
 $toform->question = $pagedata->question;
 $toform->answer = $pagedata->answer;
