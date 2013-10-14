@@ -77,13 +77,6 @@ Sound -> Sound
 
 quizzes.
 
-Adds-on to the new design : flashcard "by instance" customization
-------------------------------------------------------------------
-
-The flashcard can now have customizable backgrounds and stylesheet, using
+The flashcard module's backgrounds and stylesheets can't be longer customized, using
 a styles.php cloned file in the course files.
-
-Once the module is instanciated, copy the styles.php file within
-<MOODLEDATA>/<courseid>/moddata/flashcard/<instanceid>/flashcard.css and change this
-file to what you expect.
-
+Instead use the theme or course specific overloading of css and backgrounds.
