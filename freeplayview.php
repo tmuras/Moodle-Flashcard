@@ -58,8 +58,8 @@ $subquestions = draw_rand_array($subquestions, count($subquestions));
         }
     }
 
-    function next()
-    {
+    function next() {
+
         document.getElementById('f' + currentitem).style.display = "none";
         document.getElementById('b' + currentitem).style.display = "none";
         do {
@@ -87,7 +87,7 @@ $subquestions = draw_rand_array($subquestions, count($subquestions));
         }
     }
       
-    function remove(){
+    function disable(){
         remaining--;
         document.getElementById('remain').innerHTML = remaining;
         if (remaining == 0){
@@ -128,8 +128,10 @@ $subquestions = draw_rand_array($subquestions, count($subquestions));
                 echo '<center>';
                 $divid = "f$i";
                 $divstyle = ($i > 0) ? 'display:none' : '';
-                echo "<div id=\"{$divid}\" style=\"{$divstyle}\" class=\"backside\"";
+                echo "<div id=\"{$divid}\" style=\"{$divstyle}\" class=\"frontside card\"";
                 echo " onclick=\"javascript:clicked('f', '{$i}')\">";
+                echo "<div class=\"cardcaption\"></div>";
+                echo "<div class=\"cardcontent\">";
 
                 if ($flashcard->flipdeck) {
                     // flip card side values
@@ -137,44 +139,33 @@ $subquestions = draw_rand_array($subquestions, count($subquestions));
                     $subquestion->answertext = $subquestion->questiontext;
                     $subquestion->questiontext = $tmp;
                 }
-                ?>
-                <table class="flashcard_question" width="100%" height="100%">
-                    <tr>
-                        <td align="center" valign="center">
-                            <?php
-                            $questiontext = file_rewrite_pluginfile_urls($subquestion->questiontext, 'pluginfile.php',
-                                    $context->id, 'mod_flashcard', 'question', $subquestion->id);
-                            $options = new stdClass();
-                            $options->noclean = true;
-                            $options->overflowdiv = true;
+                
+                $questiontext = file_rewrite_pluginfile_urls($subquestion->questiontext, 'pluginfile.php',
+                $context->id, 'mod_flashcard', 'question', $subquestion->id);
+                $options = new stdClass();
+                $options->noclean = true;
+                $options->overflowdiv = true;
 
-                            echo format_text($questiontext, FORMAT_HTML);
-                            ?>
-                        </td>
-                    </tr>
-                </table>
+                echo format_text($questiontext, FORMAT_HTML);
+                ?>
                 </div>
-                </center>
+                </div>
+				</center>
         <center>
             <?php
-            echo "<div id=\"b{$i}\" style=\"display: none\" class=\"frontside\"";
+            echo "<div id=\"b{$i}\" style=\"display: none\" class=\"backside card\"";
             echo " onclick=\"javascript:clicked('b', '{$i}')\">";
-            ?>
-            <table class="flashcard_answer" width="100%" height="100%">
-                <tr>
-                    <td align="center" valign="center" style="">
-                        <?php
-                        $answertext = file_rewrite_pluginfile_urls($subquestion->answertext, 'pluginfile.php',
-                                $context->id, 'mod_flashcard', 'answer', $subquestion->id);
-                        $options = new stdClass();
-                        $options->noclean = true;
-                        $options->overflowdiv = true;
+            echo "<div class=\"cardcaption\"></div>";
+            echo "<div class=\"cardcontent\">";
+            $answertext = file_rewrite_pluginfile_urls($subquestion->answertext, 'pluginfile.php',
+            $context->id, 'mod_flashcard', 'answer', $subquestion->id);
+            $options = new stdClass();
+            $options->noclean = true;
+            $options->overflowdiv = true;
 
-                        echo format_text($answertext, FORMAT_HTML);
-                        ?>
-                    </td>
-                </tr>
-            </table>
+            echo format_text($answertext, FORMAT_HTML);
+            ?>
+            </div>
             </div>
         </center>
         <?php
@@ -182,16 +173,9 @@ $subquestions = draw_rand_array($subquestions, count($subquestions));
     }
     ?>
     <center>
-        <div id="finished" style="display: none;" class="finished">
-            <table width="100%" height="100%">
-                <tr>
-                    <td align="center" valign="middle" class="emptyset">
-                        <?php print_string('emptyset',
-                                'flashcard');
-                        ?>
-                    </td>
-                </tr>
-            </table>
+        <div id="finished" style="display: none;">
+            <?php echo "<img src=\"{$CFG->wwwroot}/mod/flashcard/pix/emptydeck.png\"/>"; ?>
+            <p><b><?php print_string('emptyset', 'flashcard')?></b><p>
         </div>
     </center>
 
@@ -222,7 +206,7 @@ $subquestions = draw_rand_array($subquestions, count($subquestions));
     <td width="200px">
         <input id="remove" type="button" value="<?php print_string('removecard',
                                 'flashcard')
-                        ?>" onclick="javascript:remove()" />
+                        ?>" onclick="javascript:disable()" />
     </td>
 </tr>
 <tr>

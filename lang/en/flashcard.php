@@ -51,8 +51,9 @@ $string['emptyset'] = 'Flashcard Set is Empty';
 $string['endtime'] = 'End of time';
 $string['fieldsep'] = 'Field separator:';
 $string['flashback:manage'] = 'Manage the cards';
-$string['flashcard:canplayfree'] = 'Jouer en mode libre';
-$string['flashcard:manage'] = 'Gérer les jeux';
+$string['flashcard:addinstance'] = 'Add a new flashcard instance';
+$string['flashcard:canplayfree'] = 'Play in free mode';
+$string['flashcard:manage'] = 'Manage cards';
 $string['flipdeck'] = 'Flip answers and questions';
 $string['forcereload'] = 'Force reloading from question';
 $string['freegame'] = 'Free play';
@@ -175,3 +176,5 @@ The importer will make a fast check of the text you want to import. It will reje
 the import if the text sequence is not well formed and tell you how many pairs are wrong in the file.
 
 As successfuly importing will erase all data from the decks but also belonging to participants, a confirmation checkbox needs to be checked in to force the import to be performed.";
+$string['saveadd'] = 'Save and add new page';
+?>

@@ -1,0 +1,71 @@
+.card {
+		min-width:150px;
+		max-width:500px;
+		min-height:200px;
+		font-family:arial, helvetica, sans-serif;
+		font-size:12px;
+		line-height:1.4em;
+		background-color:#ededed;
+		margin: auto;
+}
+
+.backside { 
+        background-image:url([[pix:flashcard|corner_back]]);
+        background-repeat:no-repeat;       
+}
+
+.frontside { 
+    background-image: url([[pix:flashcard|corner_front]]); 
+	background-repeat:no-repeat;
+	background-position:100% 0;
+}
+
+
+
+.backside .cardcaption {
+        font-style:italic;
+}
+
+.cardcontent {
+		width:97%;
+		margin:0 auto;
+		padding-top:10px;
+		padding-bottom:10px;
+		background:url([[pix:flashcard|bg_card]]);
+		background-position:0px 19px;
+}
+
+.cardcaption {
+		min-height:20px;
+		width:98%;
+		margin:0 auto;
+		border-bottom:3px double #d0dae3;
+		text-align:center;
+		padding-top:10px;
+		font-weight:bold;
+		color:#014260;
+}
+
+.emptyset { 
+    color: red; 
+}
+
+.graphdeck{
+     background-image: url([[pix:flashcard|cardslice]]);
+     background-repeat: repeat-y;
+} 
+
+.error{
+    color: red; 
+}
+
+.bar{
+    background-image: url([[pix:flashcard|men]]);
+    background-repeat: repeat-x;
+    border: solid 1px #0B2386;
+}
+
+.flashcard_playbutton{
+    display: inline-block;
+    padding: 10px;
+}	

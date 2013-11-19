@@ -120,7 +120,9 @@ if ($flashcard->flipdeck) {
         ?></p>
 
     </div>
-    <div id="questiondiv" style="border-style: dashed; width: 300px; margin: 10px auto 10px auto; padding: 10px 30px; display: block; " onclick="javascript:togglecard()" >
+    <div id="questiondiv" class="frontside card" onclick="javascript:togglecard()" >
+    	<div class="cardcaption"></div>
+    	<div class="cardcontent">
         <?php
         $questiontext = file_rewrite_pluginfile_urls($subquestion->questiontext, 'pluginfile.php', $context->id,
                 'mod_flashcard', 'question', $subquestion->id);
@@ -130,8 +132,11 @@ if ($flashcard->flipdeck) {
 
         echo format_text($questiontext, FORMAT_HTML, $textoptions);
         ?>
+        </div>
     </div>
-    <div id="answerdiv" onclick="javascript:togglecard()" style="border-style: dashed; width: 300px; margin: 10px auto 10px auto; padding: 10px 30px; display: none;">
+    <div id="answerdiv" onclick="javascript:togglecard()" style="display: none;" class="backside card">
+    	<div class="cardcaption"></div>
+    	<div class="cardcontent">
         <?php
         $answertext = file_rewrite_pluginfile_urls($subquestion->answertext, 'pluginfile.php', $context->id,
                 'mod_flashcard', 'answer', $subquestion->id);
@@ -141,6 +146,7 @@ if ($flashcard->flipdeck) {
 
         echo format_text($answertext, FORMAT_HTML, $textoptions);
         ?>
+        </div>
     </div>
     <div id="flashcard_controls">
         <p><?php print_string('cardsremaining', 'flashcard'); ?>: <span id="remain"><?php echo count($subquestions); ?></span></p>

@@ -16,18 +16,15 @@ if (!defined('MOODLE_INTERNAL')) {
 echo $out;
 /// get available decks for user and calculate deck state
 
-if (!$decks = flashcard_get_deck_status($flashcard)) {
-    // if deck status have bever been initialized initialized them
-    if (flashcard_initialize($flashcard, $USER->id)) {
-        $decks = flashcard_get_deck_status($flashcard);
-    } else {
-        if (has_capability('mod/flashcard:manage', $context)) {
-            $url = "view.php?id={$cm->id}&amp;view=edit";
-        } else {
-            $url = "{$CFG->wwwroot}/course/view.php?id={$course->id}";
-        }
-        notice(get_string('nocards', 'flashcard'), $url);
-    }
+if (flashcard_initialize($flashcard, $USER->id)) {
+	$decks = flashcard_get_deck_status($flashcard);
+} else {
+	if (has_capability('mod/flashcard:manage', $context)) {
+		$url = "view.php?id={$cm->id}&amp;view=edit";
+	} else {
+		$url = "{$CFG->wwwroot}/course/view.php?id={$course->id}";
+	}
+	notice(get_string('nocards', 'flashcard'), $url);
 }
 ?>
 <center>

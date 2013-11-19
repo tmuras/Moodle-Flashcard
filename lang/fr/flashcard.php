@@ -41,6 +41,7 @@ $string['editingcards2'] = 'Editer le jeu de cartes';
 $string['emptyset'] = 'Jeu vide';
 $string['endtime'] = 'Fin de disponibilité ';
 $string['fieldsep'] = 'Séparateur de champ :';
+$string['flashcard:addinstance'] = 'Ajouter un nouveau flashcard';
 $string['flashcard:manage'] = 'Gérer les jeux';
 $string['flashcard:canplayfree'] = 'Jouer en mode libre';
 $string['flipdeck'] = 'Inverser questions/réponses';
@@ -99,4 +100,5 @@ $string['undefinedquestionset'] = 'Aucun jeu de questions n\'a été défini pou
 $string['userdecks'] = 'Paquets des utilisateurs';
 $string['userdecks'] = 'Paquets des utilisateurs';
 $string['viewed'] = 'Affichages';
+$string['saveadd'] = 'Enregistrer et ajouter nouvelle page';
 ?>

@@ -45,7 +45,7 @@ class flashcard_cardsedit_form extends moodleform {
           }
          */
         if (!$noaddbutton) {
-            $mform->addElement('submit', 'addmore', "Save and add new page");
+            $mform->addElement('submit', 'addmore', get_string('saveadd', 'flashcard'));
         }
         $this->add_action_buttons();
     }

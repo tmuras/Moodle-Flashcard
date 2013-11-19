@@ -3,9 +3,6 @@
 /* @var $DB mysqli_native_moodle_database */
 /* @var $OUTPUT core_renderer */
 /* @var $PAGE moodle_page */
-?>
-<?php
-
 /**
  * internal library of functions and constants for module flashcard
  * @package mod-flashcard
@@ -63,18 +60,18 @@ function flashcard_print_deck(&$cm, $deck) {
     global $CFG;
 
     if ($deck == 0) {
-        echo "<img src=\"{$CFG->wwwroot}/mod/flashcard/pix/emptydeck.jpg\"/>";
+        echo "<img src=\"{$CFG->wwwroot}/mod/flashcard/pix/emptydeck.png\"/>";
     }
 
     if ($deck > 0) {
         echo "<a href=\"view.php?view=play&amp;id={$cm->id}&amp;deck={$deck}&amp;what=initialize\" title=\"" . get_string('playwithme',
-                'flashcard') . "\"><img src=\"{$CFG->wwwroot}/mod/flashcard/pix/enableddeck.jpg\"/></a>";
+                'flashcard') . "\"><img src=\"{$CFG->wwwroot}/mod/flashcard/pix/enableddeck.png\"/></a>";
     }
 
     if ($deck < 0) {
         $deck = -$deck;
         echo "<a href=\"view.php?view=play&amp;id={$cm->id}&amp;deck={$deck}&amp;what=initialize\" title=\"" . get_string('reinforce',
-                'flashcard') . "\"><img src=\"{$CFG->wwwroot}/mod/flashcard/pix/disableddeck.jpg\"/></a>";
+                'flashcard') . "\"><img src=\"{$CFG->wwwroot}/mod/flashcard/pix/disableddeck.png\"/></a>";
     }
 }
 
@@ -352,6 +349,7 @@ function flashcard_initialize(&$flashcard, $userid) {
     if ($subquestions = $DB->get_records('flashcard_deckdata', array('flashcardid' => $flashcard->id), '', 'id,id')) {
         foreach ($subquestions as $subquestion) {
             if (in_array($subquestion->id, $registered)) continue;
+            $card = new StdClass();
             $card->userid = $userid;
             $card->flashcardid = $flashcard->id;
             $card->lastaccessed = time() - ($flashcard->deck1_delay * HOURSECS);
@@ -393,11 +391,13 @@ function flashcard_get_deck_status(&$flashcard, $userid = 0) {
     if ($flashcard->decks >= 3) {
         $dk3 = $DB->count_records('flashcard_card',
                 array('flashcardid' => $flashcard->id, 'userid' => $userid, 'deck' => 3));
+        $status->decks[2] = new stdClass();
         $status->decks[2]->count = $dk3;
     }
     if ($flashcard->decks >= 4) {
         $dk4 = $DB->count_records('flashcard_card',
                 array('flashcardid' => $flashcard->id, 'userid' => $userid, 'deck' => 4));
+        $status->decks[3] = new stdClass();
         $status->decks[3]->count = $dk4;
     }
 
