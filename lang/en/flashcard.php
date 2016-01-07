@@ -81,7 +81,7 @@ $string['missingimage'] = '{missing image file}';
 $string['missingsound'] = '{missing sound file}';
 $string['modulename'] = 'Flash Card Set';
 $string['modulename_help'] = '<p>
-This module provide students a way of fast memoizing list of "things". This is a typical
+This module provide students a way of fast memorizing list of "things". This is a typical
 indexing exercise, where a map of coupled things should be learned and retained. We say "thing"
 because either key or value could be any related pair of text, images or sounds.
 </p>
