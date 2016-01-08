@@ -13,7 +13,7 @@
 
     // security
     if (!defined('MOODLE_INTERNAL')){
-        print_error("Illegal direct access to this screen");
+        print_error('errorillegaldirectaccess', 'flashcard');
     }
 
     if ($action == 'reset'){
