@@ -17,7 +17,7 @@
 /* @var $OUTPUT core_renderer */
 
 if (!defined('MOODLE_INTERNAL')) {
-    error("Illegal direct access to this screen");
+    print_error('errorillegaldirectaccess', 'flashcard');
 }
 
 require_once('cardsedit_form.php');

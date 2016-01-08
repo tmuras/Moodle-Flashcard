@@ -18,7 +18,7 @@
 /* @var $OUTPUT core_renderer */
 
 if (!defined('MOODLE_INTERNAL')) {
-    error("Illegal direct access to this screen");
+    print_error('errorillegaldirectaccess', 'flashcard');
 }
 
 /* * ****************************** Add new blank fields **************************** */
@@ -28,7 +28,7 @@ if ($action == 'add') {
     $users = $DB->get_records_menu('flashcard_card', array('flashcardid' => $flashcard->id), '', 'DISTINCT userid, id');
     for ($i = 0; $i < $add; $i++) {
         if (!$newcardid = $DB->insert_record('flashcard_deckdata', $card)) {
-            error("Could not add card to deck");
+            print_error('erroraddingcard','flashcard');
         }
         if ($users) {
             foreach (array_keys($users) as $userid) {
@@ -39,7 +39,7 @@ if ($action == 'add') {
                 $deckcard->deck = 1;
                 $deckcard->accesscount = 0;
                 if (!$DB->insert_record('flashcard_card', $deckcard)) {
-                    error("Could not bind card to user $userid deck");
+                    print_error('errorillegaldirectaccess', 'flashcard');
                 }
             }
         }
@@ -52,11 +52,11 @@ if ($action == 'delete') {
     $items = str_replace(",", "','", $items);
 
     if (!$DB->delete_records_select('flashcard_deckdata', " id IN ('$items') ")) {
-        error("Could not add card to deck");
+        print_error('erroraddingcard','flashcard');
     }
 
     if (!$DB->delete_records_select('flashcard_card', " entryid IN ('$items') ")) {
-        error("Could not add card to deck");
+        print_error('erroraddingcard','flashcard');
     }
 }
 /* * ****************************** Save and update all questions **************************** */
@@ -84,7 +84,7 @@ if ($action == 'save') {
                             PARAM_CLEAN);
         }
         if (!$DB->update_record('flashcard_deckdata', $card)) {
-            error("Could not update deck card");
+            print_error('errorcouldnotupdatedeck', 'flashcard');
         }
     }
 }

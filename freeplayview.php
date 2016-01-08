@@ -9,7 +9,7 @@
  */
 // Security
 if (!defined('MOODLE_INTERNAL')) {
-    error("Illegal direct access to this screen");
+    print_error('errorillegaldirectaccess', 'flashcard');
 }
 echo $out;
 $subquestions = $DB->get_records('flashcard_deckdata', array('flashcardid' => $flashcard->id));
